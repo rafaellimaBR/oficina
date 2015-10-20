@@ -95,7 +95,14 @@
                         <td>{!! $r->aplicacao !!}</td>
                         <td>{!! $r->marca !!}</td>
                         <td>{!! $r->valor.' / '.$r->unidade !!}</td>
-                        <td>{!! $r->qnt !!}</td>
+                        @if($r->qnt == 0)
+                            <td><small class="label bg-black">{!! $r->qnt !!}</small></td>
+                        @elseif($r->qnt >= 1 and $r->qnt < 6)
+                            <td><small class="label bg-red">{!! $r->qnt !!}</small></td>
+                        @else
+                            <td><small class="label bg-green">{!! $r->qnt !!}</small></td>
+                        @endif
+
                         <td>
                             <a href="#" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i></a>
                             <a href="{!! route('peca.editar',['id'=>$r->id]) !!}" class="btn btn-xs btn-success"><i class="fa fa-edit"></i></a>

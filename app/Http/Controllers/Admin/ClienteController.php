@@ -75,6 +75,26 @@ class ClienteController extends Controller
         }
     }
 
+    public function pesquisarAjax()
+    {
+
+
+        if(request()->ajax()){
+            $clientes   =   Cliente::pesquisarAjax(request()->get('q'));
+            $retorno    =   [];
+
+            foreach ($clientes as $key => $value) {
+                $retorno[$key]['id'] = $value->id;
+                $retorno[$key]['text'] = $value->nome;
+                $retorno[$key]['nome'] = $value->nome;
+                $retorno[$key]['registro'] = $value->registro;
+            }
+
+            return response()->json($retorno);
+        }else{
+            return 'Acesso negado';
+        }
+    }
     public function pesquisar()
     {
         try{

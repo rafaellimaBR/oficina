@@ -15,8 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/teste',function(){
-   $t = \App\Marca::find(1)->modelos()->get();
-    return $t;
+    return  \Carbon\Carbon::createFromFormat('d/m/Y H:i:s',"20/10/2015 13:12:00 ")->format('Y-m-d H:i:s');
 });
 
 Route::group(['prefix' => 'admin'], function () {
@@ -32,6 +31,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/cliente/cadastrar',   ['as'=>'cliente.cadastrar','uses'=>'Admin\ClienteController@cadastrar']);
     Route::post('/cliente/atualizar',   ['as'=>'cliente.atualizar','uses'=>'Admin\ClienteController@atualizar']);
     Route::post('/cliente',             ['as'=>'cliente.pesquisa','uses'=>'Admin\ClienteController@pesquisar']);
+    Route::post('/cliente/pesquisarCliente/',  ['as'=>'cliente.pesquisa','uses'=>'Admin\ClienteController@pesquisarAjax']);
     Route::post('/cliente/excluir',     ['as'=>'cliente.excluir','uses'=>'Admin\ClienteController@excluir']);
     Route::post('/cliente/adctelefone',   ['as'=>'cliente.adctelefone','uses'=>'Admin\ClienteController@adcTelefone']);
 
@@ -62,6 +62,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/veiculo/cadastrar',   ['as'=>'veiculo.cadastrar','uses'=>'Admin\VeiculoController@cadastrar']);
     Route::post('/veiculo/atualizar',   ['as'=>'veiculo.atualizar','uses'=>'Admin\VeiculoController@atualizar']);
     Route::post('/veiculo',             ['as'=>'veiculo.pesquisa','uses'=>'Admin\VeiculoController@pesquisar']);
+    Route::post('/veiculo/pesquisarPlaca',['as'=>'veiculo.placa','uses'=>'Admin\VeiculoController@placa']);
     Route::post('/veiculo/excluir',     ['as'=>'veiculo.excluir','uses'=>'Admin\VeiculoController@excluir']);
 
 //    Servico
@@ -90,7 +91,16 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/estoque/peca/atualizar',      ['as'=>'peca.atualizar','uses'=>'Admin\PecaController@atualizar']);
     Route::post('/estoque',                     ['as'=>'peca.pesquisa','uses'=>'Admin\PecaController@pesquisar']);
     Route::post('/estoque/excluir',             ['as'=>'peca.excluir','uses'=>'Admin\PecaController@excluir']);
-    
+
+//    Contrato
+    Route::get('/contrato',              ['as'=>'contrato.index','uses'=>'Admin\ContratoController@index']);
+    Route::get('/contrato/novo',         ['as'=>'contrato.novo','uses'=>'Admin\ContratoController@novo']);
+    Route::get('/contrato/editar/{id}',  ['as'=>'contrato.editar','uses'=>'Admin\ContratoController@editar']);
+    Route::post('/contrato/cadastrar',   ['as'=>'contrato.cadastrar','uses'=>'Admin\ContratoController@cadastrar']);
+    Route::post('/contrato/atualizar',   ['as'=>'contrato.atualizar','uses'=>'Admin\ContratoController@atualizar']);
+    Route::post('/contrato',             ['as'=>'contrato.pesquisa','uses'=>'Admin\ContratoController@pesquisar']);
+    Route::post('/contrato/excluir',     ['as'=>'contrato.excluir','uses'=>'Admin\ContratoController@excluir']);
+
     View::composer(['admin.modelo.includes.formulario','admin.modelo.index','admin.veiculo.includes.formulario'],function($view) {
         $marcas    =   \App\Marca::all();
         $dados = [];

@@ -95,4 +95,25 @@ class VeiculoController extends Controller
             return "error : ".$e->getMessage();
         }
     }
+
+    public function placa()
+    {
+        if(request()->ajax()){
+            $veiculos   =   Veiculo::PesquisarPorPlaca(request()->get('q'))->get();
+            $retorno    =   [];
+
+            foreach ($veiculos as $key => $value) {
+                $retorno[$key]['id'] = $value->id;
+                $retorno[$key]['text'] = $value->id;
+                $retorno[$key]['modelo'] = $value->modelo->nome;
+                $retorno[$key]['marca'] = $value->modelo->marca->nome;
+                $retorno[$key]['cor'] = $value->cor;
+            }
+
+
+            return response()->json($retorno);
+        }else{
+            return "Acesso negado";
+        }
+    }
 }

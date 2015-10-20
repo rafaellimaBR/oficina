@@ -49,6 +49,10 @@ class Cliente extends Model
     {
         return $query->where('email','like',"%".$email."%");
     }
+    public function scopePesquisarPorTudo($query, $p)
+    {
+        return $query->where('pesquisa','like',"%".$p."%");
+    }
     public static function validar($dados)
     {
         if(array_key_exists('id',$dados)){
@@ -113,6 +117,10 @@ class Cliente extends Model
         return Cliente::PesquisarPorEmail($req->get('email'))->PesquisarPorNome($req->get('nome'))->PesquisarPorRegistro($req->get('registro'));
     }
 
+    public static function pesquisarAjax($p)
+    {
+        return Cliente::PesquisarPorTudo($p)->get();
+    }
     public static function vincularTelefone(Request $req)
     {
         $cliente        =   Cliente::find($req->get('cliente_id'));

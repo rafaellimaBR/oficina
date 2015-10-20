@@ -19,6 +19,8 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     {!! Html::style('/admin/lte/dist/css/skins/_all-skins.min.css') !!}
+
+
     {{--<link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">--}}
     {!! Html::style('/admin/lte/dist/css/style.css') !!}
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
@@ -220,6 +222,9 @@
 
 {{--<script src="../../plugins/jQuery/jQuery-2.1.4.min.js"></script>--}}
 <!-- Bootstrap 3.3.5 -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 {!! Html::script('/bootstrap/js/bootstrap.min.js') !!}
 {{--<script src="../../bootstrap/js/bootstrap.min.js"></script>--}}
 <!-- SlimScroll -->
@@ -232,7 +237,8 @@
 <!-- AdminLTE App -->
 {!! Html::script('admin/lte/dist/js/app.min.js') !!}
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
-
+{!! Html::script('/plugins/daterangepicker/daterangepicker.js') !!}
+{!! Html::script('/plugins/daterangepicker/moment.min.js') !!}
 {!! Html::script('admin/lte/dist/js/script.js') !!}
 {{--<script src="../../dist/js/app.min.js"></script>--}}
 <!-- AdminLTE for demo purposes -->

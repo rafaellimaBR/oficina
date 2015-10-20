@@ -71,8 +71,12 @@
                 <ul class="treeview-menu">
                     <li><a href="{!! route('peca.index') !!}"><i class="fa fa-circle-o"></i> Estoque</a></li>
                     <li><a href="{!! route('categoria.index') !!}"><i class="fa fa-circle-o"></i> Categorias</a></li>
-                    <li><a href="{!! route('veiculo.index') !!}"><i class="fa fa-circle-o"></i> Peças</a></li>
                 </ul>
+            </li>
+            <li>
+                <a href="{!! route('contrato.index') !!}">
+                    <i class="fa fa-wrench"></i> <span> Ordem de Serviço</span>
+                </a>
             </li>
             {{--<li>--}}
                 {{--<a href="../widgets.html">--}}

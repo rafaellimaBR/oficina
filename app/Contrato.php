@@ -1,0 +1,116 @@
+<?php
+
+namespace App;
+
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+
+class Contrato extends Model
+{
+    protected $table    =   'contratos';
+
+    private static $restricoes  =   [
+//        'cliente_id'      =>  'different:0',
+//        'veiculo_id'      =>  'different:0',
+    ];
+    private static $mensagens   =   [
+        'required'      =>  'O campo :attribute é obrigatório.',
+        'unique'        =>  'O :attribute já esta cadastrado.',
+        'different'     =>  'Selecione um registro',
+    ];
+
+    public function cliente()
+    {
+        return $this->belongsTo('App\Cliente','cliente_id');
+    }
+
+    public function veiculo()
+    {
+        return $this->belongsTo('App\Veiculo','veiculo_id');
+    }
+
+    public static function validar($dados)
+    {
+        if(array_key_exists('id',$dados)){
+//            static::$restricoes['cliente_id'] .= ',nome,'.$dados['id'];
+        }
+        return \Validator::make($dados, static::$restricoes,static::$mensagens);
+
+    }
+
+    public static function gravar(Request $req)
+    {
+        $id =   static::gerarID();
+
+        $contrato      =   new Contrato();
+        $contrato->id   = $id;
+        $contrato->cliente()->associate(Cliente::find($req->get('cliente_id')));
+        $contrato->veiculo()->associate(Veiculo::find($req->get('veiculo_id')));
+        $contrato->obs  =   $req->get('obs');
+        $contrato->obs  =   $req->get('defeito');
+        $contrato->data_entrada =   $req->get('data_entrada');
+        $contrato->data_saida =   $req->get('data_saida');
+        $contrato->contato      =   $req->get('contato');
+        $contrato->telefone_contato      =   $req->get('telefone');
+
+        if($contrato->save() == false){
+            throw new \Exception('Erro ao grava novo registro.',402);
+        }
+
+        return $id;
+    }
+    public static function atualizar(Request $req)
+    {
+        $contrato       =   Contrato::find($req->get('id'));
+        $contrato->cliente()->associate(Cliente::find($req->get('cliente_id')));
+        $contrato->veiculo()->associate(Veiculo::find($req->get('veiculo_id')));
+        $contrato->obs  =   $req->get('obs');
+        $contrato->obs  =   $req->get('defeito');
+        $contrato->data_entrada =   $req->get('data_entrada');
+        $contrato->data_saida =   $req->get('data_saida');
+        $contrato->contato      =   $req->get('contato');
+        $contrato->telefone_contato      =   $req->get('telefone');
+
+        if($contrato->save() == false){
+            throw new \Exception('Erro ao grava novo registro.',402);
+        }
+
+        return $contrato;
+    }
+    public static function excluir(Request $req)
+    {
+        $contrato      =   Contrato::find($req->get('id'));
+
+        if($contrato->delete() == false){
+            throw new \Exception('Erro ao excluir registro',402);
+        }
+    }
+
+    public static function pesquisar(Request $req)
+    {
+        return Marca::PesquisarPorNome($req->get('nome'));
+    }
+
+    private static function gerarID()
+    {
+        $retorno    =   false;
+
+        $ano    =   Carbon::now()->format('y');
+        $mes    =   Carbon::now()->format('m');
+        $dia    =   Carbon::now()->format('d');
+        $minuto =   Carbon::now()->format('i');
+        $segundo=   Carbon::now()->format('s');
+        $semana =   Carbon::now()->format('w');
+
+        $id     =   $ano."".$mes."".$dia."".$minuto."".$segundo."".$semana;
+
+        $contrato   =   Contrato::find($id);
+
+        if($contrato == true){
+            static::gerarID();
+        }else{
+            return $id;
+        }
+    }
+}

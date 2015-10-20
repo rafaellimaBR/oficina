@@ -5,6 +5,7 @@ $(document).ready(function(){
     $('.cep').mask('00000-000');
     $('.placa').mask('SSS0000');
     $('.fone').mask('000000000');
+    $('.fone2').mask('(00)000000000',{placeholder:"(__) 000000000"});
     $('.valor').mask("#.##0.00", {reverse: true,placeholder: "0.00"});
     $('.ddd').mask('(00)',{placeholder: "(__)"});
 
@@ -106,4 +107,120 @@ $(document).ready(function(){
     });
     var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
     $('.select2').select2();
+
+    $('.cliente-ajax').select2({
+        //placeholder: 'Search for a category',
+        ajax: {
+            type: 'POST',
+            url: URL+"/admin/cliente/pesquisarCliente",
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                var token = $("input[name='_token']" ).val();
+
+                if (token) {
+                    return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                }
+            },
+            quietMillis: 400,
+            delay:400,
+            data: function (term, page) {
+                return {
+                    q: term.term, //search term
+                     // page size
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+
+        },
+        templateResult: function (data) {
+            var html    =   $('<div class="select2-user-result"><h5>'+data.text+'</h5>' +
+                '<h6>Registro: <b>'+data.registro+'</b></h6>'+
+
+                '</div>'
+
+
+            );
+
+            return html;
+        },
+        templateSelection:function (data) {
+            var html    =   $('<div class="select2-user-result"><b>Cliente: </b>'+data.text+'</div><br>'
+
+
+            );
+
+            return html;
+        },
+
+    });
+
+    $('.veiculo-ajax').select2({
+        //placeholder: 'Search for a category',
+        ajax: {
+            type: 'POST',
+            url: URL+"/admin/veiculo/pesquisarPlaca",
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                var token = $("input[name='_token']" ).val();
+
+                if (token) {
+                    return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                }
+            },
+            quietMillis: 400,
+            delay:400,
+            data: function (term, page) {
+                return {
+                    q: term.term, //search term
+                    // page size
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+
+        },
+        templateResult: function (data) {
+            var html    =   $('<div class="select2-user-result"><h5 class="uppercase">'+data.id+'</h5>' +
+                '<h6>Cor: <b>'+data.cor+'</b> - Modelo: <b>'+data.modelo+'</b> - Marca: <b>'+data.marca+'</b></h6>'+
+
+                '</div>'
+
+
+            );
+
+            return html;
+        },
+        templateSelection:function (data) {
+            var html    =   $('<div class="select2-user-result"><b>Veículo: </b><span class="uppercase">'+data.text+'</span></div><br>'
+
+
+            );
+
+            return html;
+        },
+
+    });
+
+    $('.maskData').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        timePicker24Hour: true,
+        timePicker: true,
+        showWeekNumbers:true,
+        locale: {
+            applyLabel: 'Pronto',
+            cancelLabel: 'Cancelar',
+            daysOfWeek: ['Do', 'Se', 'Te', 'Qu', 'Qi', 'Se','Sa'],
+            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            format: 'DD/MM/YYYY HH:mm:ss',
+        },
+
+    });
 });
