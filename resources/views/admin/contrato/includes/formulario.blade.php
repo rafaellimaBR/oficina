@@ -4,8 +4,8 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#dados" aria-expanded="false">Dados</a></li>
                 @if(isset($contrato))
-                    <li class=""><a data-toggle="tab" href="#telefones" aria-expanded="true">Serviços</a></li>
-                    <li class=""><a data-toggle="tab" href="#veiculos" aria-expanded="false">Peças</a></li>
+                    <li class=""><a data-toggle="tab" href="#servicos" aria-expanded="true">Serviços</a></li>
+                    <li class=""><a data-toggle="tab" href="#pecas" aria-expanded="false">Peças</a></li>
                 @endif
             </ul>
             <div class="tab-content">
@@ -22,7 +22,7 @@
                             {!! Form::select('cliente_id',(isset($contrato)?[$contrato->cliente->id=>$contrato->cliente->nome]:[]), (isset($contrato)?$contrato->cliente_id:''), ['class'=>'form-control select2 cliente-ajax']) !!}
                             {!! ($errors->has('cliente_id')? "<p class='msg-alerta'>".$errors->first('cliente_id')."</p>":"") !!}
                         </div>
-                        <div class="row col-xs-6">
+                        <div class="form-group col-xs-6">
                             {!! Form::label('veiculo','Veiculo') !!}
                             {!! Form::select('veiculo_id',(isset($contrato)?[$contrato->veiculo->id=>$contrato->veiculo->id]:[]), (isset($contrato)?$contrato->veiculo_id:''), ['class'=>'form-control select2 veiculo-ajax']) !!}
                             {!! ($errors->has('veiculo_id')? "<p class='msg-alerta'>".$errors->first('veiculo_id')."</p>":"") !!}
@@ -92,70 +92,19 @@
                     @endif
 
                 </div><!-- /.tab-pane -->
-                @if(isset($contratos))
-                    <div id="telefones" class="tab-pane ">
+                @if(isset($contrato))
+                    <div id="servicos" class="tab-pane ">
+
                         <div class="row">
-
-                            <div class="form-group col-xs-2">
-                                {!! Form::label('numero','Numero') !!}
-
-                                <input name="numero" type="text" class="form-control fone" id="campo-numero-telefone" disabled="false">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
-                                <input type="hidden" name="contrato" value="{{ $contrato->id }}" id="contrato_id">
-
-                                {!! ($errors->has('numero')? "<p class='msg-alerta'>".$errors->first('numero')."</p>":"") !!}
-                            </div>
-                            <div id="div-novo-telefone" hidden>
-                                <div class="form-group col-xs-1">
-                                    {!! Form::label('ddd','DDD') !!}
-                                    {!! Form::text('ddd','',['class'=>'form-control ddd','id'=>'ddd-telefone']) !!}
-                                    {!! ($errors->has('ddd')? "<p class='msg-alerta'>".$errors->first('ddd')."</p>":"") !!}
-                                </div>
-                                <div class="form-group col-xs-2">
-                                    {!! Form::label('tipo-telefone','Tipo') !!}
-                                    {!! Form::select('tipo-telefone',['Celular'=>'Celular','Fixo'=>'Fixo'], 'Celular', ['class'=>'form-control','id'=>'tipo-telefone']) !!}
-                                    {!! ($errors->has('tipo-telefone')? "<p class='msg-alerta'>".$errors->first('disponibilidade')."</p>":"") !!}
-                                </div>
-                                <div class="form-group col-xs-2">
-                                    {!! Form::label('operadora-telefone','Operadora') !!}
-                                    {!! Form::select('operadora-telefone',['Oi'=>'Oi','Tim'=>'Tim','Claro'=>'Claro','Vivo'=>'Vivo','Gvt'=>'Gvt','Sky'=>'Sky','Net'=>'Net'], 'Celular', ['class'=>'form-control','id'=>'operadora-telefone']) !!}
-                                    {!! ($errors->has('operadora-telefone')? "<p class='msg-alerta'>".$errors->first('operadora-telefone')."</p>":"") !!}
-                                </div>
-
-                            </div>
-                            <div id="div-cadastrado-telefone" hidden>
-                                <div class="form-group col-xs-2">
-                                    {!! Form::label('disponibilidade','Disponibilidade') !!}
-                                    {!! Form::select('disponibilidade',['dia todo'=>'Dia Todo','manha'=>'Manhã','tarde'=>'Tarde','noite'=>'Noite'], 'dia todo', ['class'=>'form-control','id'=>'dis-telefone']) !!}
-                                    {!! ($errors->has('disponibilidade')? "<p class='msg-alerta'>".$errors->first('disponibilidade')."</p>":"") !!}
-                                </div>
-                            </div>
-                            <div id="div-pesquisar-telefone">
-                                <div class="form-group col-xs-1">
-                                    <label for="botao-find-contato" class="">Pesquisar</label>
-                                    <button type="button" class="btn btn-success form-control" id="botao-pesquisar-telefone"><i class="fa fa-refresh"></i></button>
-                                </div>
+                            <div class="col-md-4">
+                                <h5>Serviços</h5>
+                                {!! Form::select('cliente_id',[0=>'Selecione um serviço'], [0], ['class'=>'form-control servico-ajax','style'=>'width: 100%']) !!}
                             </div>
 
-                            <div id="div-add-telefone" hidden>
-                                <div class="form-group col-xs-2">
-                                    <label for="botao-add-contato" class="">Botão</label>
-                                    <button type="button" class="btn btn-success" id="botao-add-telefone">Vinclular Telefone</button>
-                                </div>
-                                <div class="form-group col-xs-1">
-                                    <label for="botao-add-contato" class="">Voltar</label>
-                                    <button type="button" class="btn btn-default" id="botao-voltar-telefone">Voltar</button>
-                                </div>
-                            </div>
+                        </div><!--/row-->
 
-
-
-                        </div>
-                        <div class="row " id="tabela-contatos">
-                            @include('admin.contrato.includes.telefones')
-                        </div>
                     </div><!-- /.tab-pane -->
-                    <div id="veiculos" class="tab-pane">
+                    <div id="pecas" class="tab-pane">
                         Veiculos
                     </div><!-- /.tab-pane -->
                 @endif

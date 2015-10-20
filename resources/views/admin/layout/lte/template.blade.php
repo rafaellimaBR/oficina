@@ -23,7 +23,9 @@
 
     {{--<link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">--}}
     {!! Html::style('/admin/lte/dist/css/style.css') !!}
-    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.css" rel="stylesheet" />
+    <link href='//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2-bootstrap.css' rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

@@ -89,4 +89,23 @@ class ServicoController extends Controller
             return "error : ".$e->getMessage();
         }
     }
+
+    public function pesquisarServico()
+    {
+        if(request()->ajax()){
+            $servico   =   Servico::pesquisar(request());
+            $retorno    =   [];
+
+            foreach ($servico as $key => $value) {
+                $retorno[$key]['id'] = $value->id;
+                $retorno[$key]['text'] = $value->nome;
+                $retorno[$key]['nome'] = $value->nome;
+                $retorno[$key]['valor'] = $value->valor;
+            }
+
+            return response()->json($retorno);
+        }else{
+            return "Acesso negado";
+        }
+    }
 }

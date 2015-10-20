@@ -15,7 +15,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/teste',function(){
-    return  \Carbon\Carbon::createFromFormat('d/m/Y H:i:s',"20/10/2015 13:12:00 ")->format('Y-m-d H:i:s');
+    $servico   =   Servico::pesquisar(request());
+    $retorno    =   [];
+
+    foreach ($servico as $key => $value) {
+        $retorno[$key]['id'] = $value->id;
+        $retorno[$key]['text'] = $value->nome;
+        $retorno[$key]['nome'] = $value->nome;
+        $retorno[$key]['valor'] = $value->valor;
+    }
+
+    return $retorno;
+
 });
 
 Route::group(['prefix' => 'admin'], function () {
@@ -72,6 +83,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/servico/cadastrar',   ['as'=>'servico.cadastrar','uses'=>'Admin\ServicoController@cadastrar']);
     Route::post('/servico/atualizar',   ['as'=>'servico.atualizar','uses'=>'Admin\ServicoController@atualizar']);
     Route::post('/servico',             ['as'=>'servico.pesquisa','uses'=>'Admin\ServicoController@pesquisar']);
+    Route::post('/servico/pesquisarServico',['as'=>'servico.pesquisarservico','uses'=>'Admin\ServicoController@pesquisarServico']);
     Route::post('/servico/excluir',     ['as'=>'servico.excluir','uses'=>'Admin\ServicoController@excluir']);
 
 //    Categoria

@@ -64,6 +64,6 @@ class Servico extends Model
 
     public static function pesquisar(Request $req)
     {
-        return Servico::PesquisarPorNome($req->get('nome'));
+        return Servico::PesquisarPorNome($req->get('q'))->get();
     }
 }

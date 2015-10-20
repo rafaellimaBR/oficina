@@ -208,6 +208,57 @@ $(document).ready(function(){
 
     });
 
+    $('.servico-ajax').select2({
+        //placeholder: 'Search for a category',
+        ajax: {
+            type: 'POST',
+            url: URL+"/admin/servico/pesquisarServico",
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                var token = $("input[name='_token']" ).val();
+
+                if (token) {
+                    return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                }
+            },
+            quietMillis: 400,
+            delay:400,
+            data: function (term, page) {
+                return {
+                    q: term.term, //search term
+                    // page size
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+
+        },
+        templateResult: function (data) {
+            var html    =   $('<div class="select2-user-result"><h5>'+data.nome+'</h5>' +
+                '<h6>Valor: <b>'+data.valor+'</b></h6>'+
+
+                '</div>'
+
+
+            );
+
+            return html;
+        },
+        templateSelection:function (data) {
+            var html    =   $('<div class="select2-user-result"><b>Serviço: </b>'+data.text+'</div><br>'
+
+
+            );
+
+            return html;
+        },
+
+    });
+
+
     $('.maskData').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,

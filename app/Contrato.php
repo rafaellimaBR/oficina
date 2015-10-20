@@ -48,7 +48,7 @@ class Contrato extends Model
         $contrato->cliente()->associate(Cliente::find($req->get('cliente_id')));
         $contrato->veiculo()->associate(Veiculo::find($req->get('veiculo_id')));
         $contrato->obs  =   $req->get('obs');
-        $contrato->obs  =   $req->get('defeito');
+        $contrato->defeito  =   $req->get('defeito');
         $contrato->data_entrada =   $req->get('data_entrada');
         $contrato->data_saida =   $req->get('data_saida');
         $contrato->contato      =   $req->get('contato');
@@ -66,7 +66,7 @@ class Contrato extends Model
         $contrato->cliente()->associate(Cliente::find($req->get('cliente_id')));
         $contrato->veiculo()->associate(Veiculo::find($req->get('veiculo_id')));
         $contrato->obs  =   $req->get('obs');
-        $contrato->obs  =   $req->get('defeito');
+        $contrato->defeito  =   $req->get('defeito');
         $contrato->data_entrada =   $req->get('data_entrada');
         $contrato->data_saida =   $req->get('data_saida');
         $contrato->contato      =   $req->get('contato');
