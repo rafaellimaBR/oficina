@@ -81,4 +81,34 @@ class PecaController extends Controller
         $pecas  =   Peca::pesquisar(request())->paginate(15);
         return view('admin.peca.index')->with('pecas',$pecas);
     }
+
+    public function pesqusiarAjax()
+    {
+        if(request()->ajax()){
+            $pecas  =   Peca::PesquisarPorTudo(request()->get('q'))->get();
+            $retorno    =   [];
+
+            foreach ($pecas as $key => $value) {
+                $retorno[$key]['id'] = $value->id;
+                $retorno[$key]['text'] = $value->descricao;
+                $retorno[$key]['nome'] = $value->descricao;
+                $retorno[$key]['valor'] = $value->valor;
+                $retorno[$key]['qnt'] = $value->qnt;
+                $retorno[$key]['marca'] = $value->marca;
+
+            }
+            return response()->json($retorno);
+
+
+        }else{
+            return 'Acesso negado.';
+        }
+    }
+
+    public function getPeca($id)
+    {
+        return response()->json(Peca::find($id));
+    }
+
+
 }

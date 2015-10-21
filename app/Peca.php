@@ -122,4 +122,5 @@ class Peca extends Model
             ->PesquisarPorMarca($req->get('marca'))
             ->PesquisarPorQnt($req->get('qnt'));
     }
+
 }

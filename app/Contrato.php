@@ -41,6 +41,17 @@ class Contrato extends Model
         return $this->hasMany('App\Maoobra','contrato_id');
     }
 
+    public function pecas()
+    {
+        return $this->belongsToMany('App\Peca','pedidos','contrato_id','peca_id')
+            ->withPivot('valor','qnt');
+    }
+
+    public function pedidos()
+    {
+        return $this->hasMany('App\Pedido','contrato_id');
+    }
+
     public static function validar($dados)
     {
         if(array_key_exists('id',$dados)){
@@ -130,8 +141,26 @@ class Contrato extends Model
         $contrato   =   Contrato::find($req->get('contrato'));
         $contrato->servicos()->attach($req->get('servico'),['valor'=>$req->get('valor')]);
         $contrato->save();
+    }
 
+    public static function desvincularServico(Request $req)
+    {
+        $contrato   =   Contrato::find($req->get('contrato'));
 
+        $contrato->servicos()->detach($req->get('servico'));
+    }
 
+    public static function vincularPeca(Request $req)
+    {
+        $contrato   =   Contrato::find($req->get('contrato'));
+        $contrato->pecas()->attach($req->get('peca'),['valor'=>$req->get('valor'),'qnt'=>$req->get('qnt')]);
+        $contrato->save();
+    }
+    public static function desvincularPeca(Request $req)
+    {
+        $contrato   =   Contrato::find($req->get('contrato'));
+
+        $contrato->pecas()->detach($req->get('peca'));
+        $contrato->save();
     }
 }

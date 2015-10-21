@@ -12,8 +12,14 @@ class ModeloSeeder extends Seeder
     public function run()
     {
         DB::table('modelos')->insert([
-            'nome'      =>  'Gol 1.0 trend',
+            'nome'      =>  'Gol 1.0 Trend',
             'marca_id'  =>  1,
+            'created_at'=>  \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at'=>  \Carbon\Carbon::now()->toDateTimeString(),
+        ]);
+        DB::table('modelos')->insert([
+            'nome'      =>  'Palio ELx',
+            'marca_id'  =>  2,
             'created_at'=>  \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at'=>  \Carbon\Carbon::now()->toDateTimeString(),
         ]);

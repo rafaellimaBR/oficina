@@ -208,6 +208,122 @@ $(document).ready(function(){
 
     });
 
+    $('.peca-ajax').select2({
+        //placeholder: 'Search for a category',
+        ajax: {
+            type: 'POST',
+            url: URL+"/admin/estoque/peca/pesquisaAjax",
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                var token = $("input[name='_token']" ).val();
+
+                if (token) {
+                    return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                }
+            },
+            quietMillis: 400,
+            delay:400,
+            data: function (term, page) {
+                return {
+                    q: term.term, //search term
+                    // page size
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+
+        },
+        templateResult: function (data) {
+            var html    =   $('<div class="select2-user-result"><h5 class="uppercase">'+data.nome+'</h5>' +
+                '<h6>Marca: <b>'+data.marca+'</b> - Valor: <b>'+data.valor+'</b> - Disponíveis: <b>'+data.qnt+'</b></h6>'+
+
+                '</div>'
+
+
+            );
+
+            return html;
+        },
+        templateSelection:function (data) {
+            var html    =   $('<div class="select2-user-result"><b>Peça: </b><span class="uppercase">'+data.text+'</span></div><br>'
+
+
+            );
+
+            return html;
+        },
+
+    });
+    $('.peca-ajax').change(function(){
+       var peca =   $('.peca-ajax').val();
+        if(peca != 0){
+            $.get(URL+'/admin/estoque/getPeca/'+peca,function(resultado){
+                $('#img-load').show('fast');
+                $("#valor-peca").val(resultado.valor);
+                $("#disp-peca").val(resultado.qnt);
+
+
+            }).done(function() {
+
+                $('#peca-campos').show('fast');
+                $('#img-load').hide();
+            }).fail(function() {
+                $("#valor-peca").val('0.00');
+                $('#peca-campos').hide('fast');
+                $('#img-load').hide();
+            })  .always(function() {
+
+                $('#img-load').hide();
+
+            });
+
+
+        }else{
+
+        }
+    });
+    $('#botao-add-peca').click(function(){
+        var peca    =   $('.peca-ajax').val();
+        var qnt     =   $('#qnt-peca').val();
+        var valor   =   $('#valor-peca').val();
+        var contrato    =   $("input[name='id']" ).val();
+
+        var dados   =   {
+            'contrato'  :   contrato,
+            'peca'      :   peca,
+            'qnt'       :   qnt,
+            'valor'     :   valor
+        }
+
+        if(peca != 0 || qnt != 0){
+            $.ajax({
+                url: URL+'/admin/contrato/addPeca',
+                type:"POST",
+                beforeSend: function (xhr) {
+                    var token = $("input[name='_token']" ).val();
+
+                    if (token) {
+                        return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                    }
+                },
+                data: dados,
+                success:function(data){
+
+                    $('.tabela-pecas').html(data.html);
+
+                },error:function(){
+                    alert("error!!!!");
+                }
+            }); //end of ajax
+        }
+        return false;
+
+
+    });
+
     $('.servico-ajax').change(function(){
         var servico  =   $('.servico-ajax').val();
 
@@ -248,33 +364,38 @@ $(document).ready(function(){
         }
 
 
-        $.ajax({
-            url: URL+'/admin/contrato/addServico',
-            type:"POST",
-            beforeSend: function (xhr) {
-                var token = $("input[name='_token']" ).val();
+       if(servico != 0){
+           $.ajax({
+               url: URL+'/admin/contrato/addServico',
+               type:"POST",
+               beforeSend: function (xhr) {
+                   var token = $("input[name='_token']" ).val();
 
-                if (token) {
-                    return xhr.setRequestHeader('X-CSRF-TOKEN', token);
-                }
-            },
-            data: dados,
-            success:function(data){
+                   if (token) {
+                       return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                   }
+               },
+               data: dados,
+               success:function(data){
 
-                    $("#valor-servico").val('0.00');
-                    $('#servico-campos').hide('fast');
-                    $('.tabela-servicos').html(data.html);
-
-
-
+                   $("#valor-servico").val('0.00');
+                   $('#servico-campos').hide('fast');
+                   $('.tabela-servicos').html(data.html);
 
 
 
 
-            },error:function(){
-                alert("error!!!!");
-            }
-        }); //end of ajax
+
+
+
+               },error:function(){
+                   alert("error!!!!");
+               }
+           }); //end of ajax
+       }else{
+           $('#servico-campos').hide('fast');
+           alert("Selecione um servico.");
+       }
 
         return false;
     });

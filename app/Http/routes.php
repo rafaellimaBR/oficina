@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/teste',function(){
-    return \App\Contrato::find(15102140483)->servicos()->get();
+    return \App\Peca::PesquisarPorTudo('te')->get();
 
 });
 
@@ -92,6 +92,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/estoque/peca/editar/{id}',     ['as'=>'peca.editar','uses'=>'Admin\PecaController@editar']);
     Route::post('/estoque/peca/cadastrar',      ['as'=>'peca.cadastrar','uses'=>'Admin\PecaController@cadastrar']);
     Route::post('/estoque/peca/atualizar',      ['as'=>'peca.atualizar','uses'=>'Admin\PecaController@atualizar']);
+    Route::get('/estoque/getPeca/{id}',             ['as'=>'peca.getPeca','uses'=>'Admin\PecaController@getPeca']);
+    Route::post('/estoque/peca/pesquisaAjax',      ['as'=>'peca.pesquisaAjax','uses'=>'Admin\PecaController@pesqusiarAjax']);
     Route::post('/estoque',                     ['as'=>'peca.pesquisa','uses'=>'Admin\PecaController@pesquisar']);
     Route::post('/estoque/excluir',             ['as'=>'peca.excluir','uses'=>'Admin\PecaController@excluir']);
 
@@ -102,8 +104,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/contrato/cadastrar',   ['as'=>'contrato.cadastrar','uses'=>'Admin\ContratoController@cadastrar']);
     Route::post('/contrato/atualizar',   ['as'=>'contrato.atualizar','uses'=>'Admin\ContratoController@atualizar']);
     Route::post('/contrato',             ['as'=>'contrato.pesquisa','uses'=>'Admin\ContratoController@pesquisar']);
-    Route::post('/contrato/addServico',  ['as'=>'contrato.addservico','uses'=>'Admin\ContratoController@addServico']);
     Route::post('/contrato/excluir',     ['as'=>'contrato.excluir','uses'=>'Admin\ContratoController@excluir']);
+    Route::post('/contrato/addServico',  ['as'=>'contrato.addservico','uses'=>'Admin\ContratoController@addServico']);
+    Route::post('/contrato/remServico',  ['as'=>'contrato.remservico','uses'=>'Admin\ContratoController@remServico']);
+    Route::post('/contrato/addPeca',        ['as'=>'contrato.addpeca','uses'=>'Admin\ContratoController@addPeca']);
+    Route::post('/contrato/rmPeca',        ['as'=>'contrato.rmPeca','uses'=>'Admin\ContratoController@rmPeca']);
 
     View::composer(['admin.modelo.includes.formulario','admin.modelo.index','admin.veiculo.includes.formulario'],function($view) {
         $marcas    =   \App\Marca::all();

@@ -120,4 +120,63 @@ class ContratoController extends Controller
             return "Acesso negado";
         }
     }
+
+    public function remServico()
+    {
+//        return request()->all();
+        if(request()->ajax()){
+            try{
+                Contrato::desvincularServico(request());
+
+                $html   =   view('admin.contrato.includes.servicos')->with('contrato',Contrato::find(request()->get('contrato')))->render();
+                return response()->json(['html'=>$html]);
+
+            }catch(\Exception $e){
+                return response()->json(['error'=>$e->getMessage()]);
+            }
+
+        }else{
+            return "Acesso negado";
+        }
+    }
+    public function addPeca()
+    {
+        if(request()->ajax()){
+
+            try{
+                Contrato::vincularPeca(request());
+                $contrato   =   Contrato::find(request()->get('contrato'));
+                $html   =   view('admin.contrato.includes.pecas')->with('contrato',$contrato)->render();
+
+                return response()->json(['html'=>$html]);
+
+
+            }catch (\Exception $e){
+                return response()->json(['error'=>$e->getMessage()]);
+            }
+
+
+        }else{
+            return "Acesso negado";
+        }
+    }
+
+    public function rmPeca()
+    {
+        if(request()->ajax()){
+
+
+            Contrato::desvincularPeca(request());
+
+            $contrado   =   Contrato::find(request()->get('contrato'));
+
+            $html   =   view('admin.contrato.includes.pecas')->with('contrato',$contrado)->render();
+
+            return response()->json(['html'=>$html]);
+
+
+        }else{
+            return "Acesso negado.";
+        }
+    }
 }
