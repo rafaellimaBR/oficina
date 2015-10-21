@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Contrato;
+use App\Servico;
 use Carbon\Carbon;
 use Illuminate\Routing\Controller;
 
@@ -97,6 +98,26 @@ class ContratoController extends Controller
             return response()->json(Contrato::find($id)->modelos()->get());
         }else{
             return "Acesso Negado.";
+        }
+    }
+
+    public function addServico()
+    {
+
+        if(request()->ajax()){
+            try{
+                Contrato::vincularServico(request());
+
+                $contrato   =   Contrato::find(request()->get('contrato'));
+
+                $html   =   view('admin.contrato.includes.servicos')->with('contrato',$contrato)->render();
+
+                return response()->json(['html'=>$html]);
+            }catch (\Exception $e){
+                return response()->json(['error'=>$e->getMessage()]);
+            }
+        }else{
+            return "Acesso negado";
         }
     }
 }

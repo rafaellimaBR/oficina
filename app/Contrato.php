@@ -30,6 +30,17 @@ class Contrato extends Model
         return $this->belongsTo('App\Veiculo','veiculo_id');
     }
 
+    public function servicos()
+    {
+        return $this->belongsToMany('App\Servico','maoobras','contrato_id','servico_id')
+            ->withPivot('valor');
+    }
+
+    public function maoobra()
+    {
+        return $this->hasMany('App\Maoobra','contrato_id');
+    }
+
     public static function validar($dados)
     {
         if(array_key_exists('id',$dados)){
@@ -112,5 +123,15 @@ class Contrato extends Model
         }else{
             return $id;
         }
+    }
+
+    public static function vincularServico(Request $req)
+    {
+        $contrato   =   Contrato::find($req->get('contrato'));
+        $contrato->servicos()->attach($req->get('servico'),['valor'=>$req->get('valor')]);
+        $contrato->save();
+
+
+
     }
 }

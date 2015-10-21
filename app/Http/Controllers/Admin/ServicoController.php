@@ -108,4 +108,14 @@ class ServicoController extends Controller
             return "Acesso negado";
         }
     }
+
+    public function getServico($id)
+    {
+        return response()->json(Servico::find($id));
+        if(request()->ajax()){
+            return response()->json(Servico::find($id));
+        }else{
+            return "Acesso negado!";
+        }
+    }
 }

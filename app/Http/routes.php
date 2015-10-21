@@ -15,17 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/teste',function(){
-    $servico   =   Servico::pesquisar(request());
-    $retorno    =   [];
-
-    foreach ($servico as $key => $value) {
-        $retorno[$key]['id'] = $value->id;
-        $retorno[$key]['text'] = $value->nome;
-        $retorno[$key]['nome'] = $value->nome;
-        $retorno[$key]['valor'] = $value->valor;
-    }
-
-    return $retorno;
+    return \App\Contrato::find(15102140483)->servicos()->get();
 
 });
 
@@ -84,6 +74,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/servico/atualizar',   ['as'=>'servico.atualizar','uses'=>'Admin\ServicoController@atualizar']);
     Route::post('/servico',             ['as'=>'servico.pesquisa','uses'=>'Admin\ServicoController@pesquisar']);
     Route::post('/servico/pesquisarServico',['as'=>'servico.pesquisarservico','uses'=>'Admin\ServicoController@pesquisarServico']);
+    Route::get('/servico/getServico/{id}',['as'=>'servico.getServico','uses'=>'Admin\ServicoController@getServico']);
     Route::post('/servico/excluir',     ['as'=>'servico.excluir','uses'=>'Admin\ServicoController@excluir']);
 
 //    Categoria
@@ -111,6 +102,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/contrato/cadastrar',   ['as'=>'contrato.cadastrar','uses'=>'Admin\ContratoController@cadastrar']);
     Route::post('/contrato/atualizar',   ['as'=>'contrato.atualizar','uses'=>'Admin\ContratoController@atualizar']);
     Route::post('/contrato',             ['as'=>'contrato.pesquisa','uses'=>'Admin\ContratoController@pesquisar']);
+    Route::post('/contrato/addServico',  ['as'=>'contrato.addservico','uses'=>'Admin\ContratoController@addServico']);
     Route::post('/contrato/excluir',     ['as'=>'contrato.excluir','uses'=>'Admin\ContratoController@excluir']);
 
     View::composer(['admin.modelo.includes.formulario','admin.modelo.index','admin.veiculo.includes.formulario'],function($view) {
@@ -148,5 +140,14 @@ Route::group(['prefix' => 'admin'], function () {
             $dados[$r->id] = $r->nome;
         }
         $view->with('categorias',$dados);
+    });
+    View::composer(['admin.contrato.includes.formulario'],function($view) {
+        $servicos    =   \App\Servico::all();
+        $dados = [];
+
+        foreach($servicos as $r){
+            $dados[$r->id] = $r->nome;
+        }
+        $view->with('servicos',$dados);
     });
 });

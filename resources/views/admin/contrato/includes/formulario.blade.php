@@ -96,12 +96,30 @@
                     <div id="servicos" class="tab-pane ">
 
                         <div class="row">
-                            <div class="col-md-4">
-                                <h5>Serviços</h5>
-                                {!! Form::select('cliente_id',[0=>'Selecione um serviço'], [0], ['class'=>'form-control servico-ajax','style'=>'width: 100%']) !!}
+                            <div class="form-group col-md-4">
+                                {!! Form::label('servico','Serviço') !!}
+                                {!! Form::select('servico',[0=>'Selecione um serviço']+$servicos, [0], ['class'=>'form-control servico-ajax','id'=>'servico']) !!}
                             </div>
+                            <div class="form-group col-md-1" id="img-load" hidden>
+                                {!! Form::image('img/util/load.gif','load',['class'=>'img-load','style'=>'margin-top: 25px']) !!}
+                            </div>
+                            <div id="servico-campos" hidden>
+                                <div class="form-group col-xs-2">
+                                    {!! Form::label('valor','Valor') !!}
+                                    {!! Form::text('valor','',['class'=>'form-control','id'=>'valor-servico']) !!}
 
+                                </div>
+                                <div class="form-group col-xs-2  pull-right">
+                                    {!! Form::label('add','Add') !!}
+                                    <button class="btn btn-success form-control" id="botao-add-servico">Vincular</button>
+
+                                </div>
+                            </div>
                         </div><!--/row-->
+
+                        <div class="tabela-servicos">
+                            @include('admin.contrato.includes.servicos')
+                        </div>
 
                     </div><!-- /.tab-pane -->
                     <div id="pecas" class="tab-pane">

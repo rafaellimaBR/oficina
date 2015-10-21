@@ -208,12 +208,49 @@ $(document).ready(function(){
 
     });
 
-    $('.servico-ajax').select2({
-        //placeholder: 'Search for a category',
-        ajax: {
-            type: 'POST',
-            url: URL+"/admin/servico/pesquisarServico",
-            dataType: 'json',
+    $('.servico-ajax').change(function(){
+        var servico  =   $('.servico-ajax').val();
+
+        if(servico != 0){
+
+            $.get(URL+'/admin/servico/getServico/'+servico,function(resultado){
+                $('#img-load').show('fast');
+                $("#valor-servico").val(resultado.valor);
+
+            }).done(function() {
+
+                $('#servico-campos').show('fast');
+                $('#img-load').hide();
+            }).fail(function() {
+                $("#valor-servico").val('0.00');
+                $('.servico-campos').hide('fast');
+                $('#img-load').hide();
+            })  .always(function() {
+
+                $('#img-load').hide();
+
+            });
+        }else{
+            $("#valor-servico").val('0.00');
+            $('#servico-campos').hide('fast');
+        }
+
+
+    });
+    $('#botao-add-servico').click(function(){
+        var contrato    =   $("input[name='id']" ).val();
+        var servico     =   $('#servico').val();
+        var valor       =   $('#valor-servico').val();
+        var dados = {
+            'contrato'      :   contrato,
+            'servico'       :   servico,
+            'valor'         :   valor
+        }
+
+
+        $.ajax({
+            url: URL+'/admin/contrato/addServico',
+            type:"POST",
             beforeSend: function (xhr) {
                 var token = $("input[name='_token']" ).val();
 
@@ -221,42 +258,27 @@ $(document).ready(function(){
                     return xhr.setRequestHeader('X-CSRF-TOKEN', token);
                 }
             },
-            quietMillis: 400,
-            delay:400,
-            data: function (term, page) {
-                return {
-                    q: term.term, //search term
-                    // page size
-                };
-            },
-            processResults: function (data) {
-                return {
-                    results: data
-                };
-            },
+            data: dados,
+            success:function(data){
 
-        },
-        templateResult: function (data) {
-            var html    =   $('<div class="select2-user-result"><h5>'+data.nome+'</h5>' +
-                '<h6>Valor: <b>'+data.valor+'</b></h6>'+
-
-                '</div>'
+                    $("#valor-servico").val('0.00');
+                    $('#servico-campos').hide('fast');
+                    $('.tabela-servicos').html(data.html);
 
 
-            );
-
-            return html;
-        },
-        templateSelection:function (data) {
-            var html    =   $('<div class="select2-user-result"><b>Serviço: </b>'+data.text+'</div><br>'
 
 
-            );
 
-            return html;
-        },
 
+
+            },error:function(){
+                alert("error!!!!");
+            }
+        }); //end of ajax
+
+        return false;
     });
+
 
 
     $('.maskData').daterangepicker({

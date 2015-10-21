@@ -26,6 +26,7 @@ class CriarContratoTabela extends Migration
             $tabela->string('veiculo_id',10);
             $tabela->timestamps();
 
+            $tabela->primary('id');
             $tabela->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
             $tabela->foreign('veiculo_id')->references('id')->on('veiculos')->onDelete('cascade');
         });
@@ -38,6 +39,6 @@ class CriarContratoTabela extends Migration
      */
     public function down()
     {
-        Schema::drop('contratos');
+        Schema::dropIfExists('contratos');
     }
 }
