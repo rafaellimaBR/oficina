@@ -27,7 +27,9 @@ class ConfiguracaoSeeder extends Seeder
             'cidade'            =>  'cidade',
             'estado'            =>  'estado',
             'email'             =>  'empresa@empresa.com.br',
-            'logo'              =>  '15102118583.png'
+            'logo'              =>  '15102118583.png',
+
+            'contrato'          =>  'a:6:{s:9:"orcamento";s:1:"2";s:9:"andamento";s:1:"5";s:6:"aberto";s:1:"4";s:9:"cancelado";s:1:"3";s:10:"finalizado";s:1:"6";s:4:"novo";s:1:"1";}'
         ]);
     }
 }

@@ -1,8 +1,10 @@
+{{--{!! dd(unserialize($conf->contrato)) !!}--}}
 <div class="row">
     <div class="col-xs-12">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#dados" aria-expanded="false">Dados</a></li>
+                <li class=""><a data-toggle="tab" href="#confi" aria-expanded="true">Configuração</a></li>
             </ul>
             <div class="tab-content">
                 <div id="dados" class="tab-pane active">
@@ -98,6 +100,34 @@
 
 
                 </div><!-- /.tab-pane -->
+                <div id="confi" class="tab-pane">
+                    <div class="row">
+                        <div class="form-group col-xs-2">
+                            {!! Form::label('orcamento','Orcamento') !!}
+                            {!! Form::select('orcamento',$status, (isset($conf)?unserialize($conf->contrato)['orcamento']:''), ['class'=>'form-control']) !!}
+                        </div>
+                        <div class="form-group col-xs-2">
+                            {!! Form::label('andamento','Em Andamento') !!}
+                            {!! Form::select('andamento',$status, (isset($conf)?unserialize($conf->contrato)['andamento']:''), ['class'=>'form-control']) !!}
+                        </div>
+                        <div class="form-group col-xs-2">
+                            {!! Form::label('aberto','Em Aberto') !!}
+                            {!! Form::select('aberto',$status, (isset($conf)?unserialize($conf->contrato)['aberto']:''), ['class'=>'form-control']) !!}
+                        </div>
+                        <div class="form-group col-xs-2">
+                            {!! Form::label('cancelado','Cancelado') !!}
+                            {!! Form::select('cancelado',$status, (isset($conf)?unserialize($conf->contrato)['cancelado']:''), ['class'=>'form-control']) !!}
+                        </div>
+                        <div class="form-group col-xs-2">
+                            {!! Form::label('finalizado','Finalizado') !!}
+                            {!! Form::select('finalizado',$status, (isset($conf)?unserialize($conf->contrato)['finalizado']:''), ['class'=>'form-control']) !!}
+                        </div>
+                        <div class="form-group col-xs-2">
+                            {!! Form::label('novo','Novo') !!}
+                            {!! Form::select('novo',$status, (isset($conf)?unserialize($conf->contrato)['novo']:''), ['class'=>'form-control']) !!}
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="form-group col-xs-6">
                         @if(isset($conf))

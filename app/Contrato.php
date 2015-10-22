@@ -54,7 +54,7 @@ class Contrato extends Model
 
     public function status()
     {
-        return $this->belongsToMany('App\Status','historicos','contrato_id','status_id');
+        return $this->belongsToMany('App\Status','historicos','contrato_id','status_id')->withPivot('obs','data')->withTimestamps();
     }
 
     public function historicos()
@@ -86,8 +86,25 @@ class Contrato extends Model
         $contrato->contato      =   $req->get('contato');
         $contrato->telefone_contato      =   $req->get('telefone');
 
+
+//        if($req->get('tipo-registro') ==  'orcamento'){
+//            $contrato->status()->attach(unserialize(Configuracao::find(1)->contrato)['orcamento'],['obs'=>'Registro em orcamento aguardando aprovação.','data'=>Carbon::now()->toDateString()]);
+//        }else{
+//            $contrato->status()->attach(unserialize(Configuracao::find(1)->contrato)['aberto'],['obs'=>'Registro em aberto aguardando serviço','data'=>Carbon::now()->toDateString()]);
+//        }
+
         if($contrato->save() == false){
             throw new \Exception('Erro ao grava novo registro.',402);
+        }else{
+            $contrato = Contrato::find($id);
+
+            $contrato->status()->attach(unserialize(Configuracao::find(1)->contrato)['novo'],['obs'=>'Registro cirado com sucesso','data'=>Carbon::now()->toDateTimeString()]);
+
+            if($req->get('tipo-registro') ==  'orcamento'){
+                $contrato->status()->attach(unserialize(Configuracao::find(1)->contrato)['orcamento'],['obs'=>'Registro em orcamento aguardando aprovação.','data'=>Carbon::now()->toDateTimeString()]);
+            }else{
+                $contrato->status()->attach(unserialize(Configuracao::find(1)->contrato)['aberto'],['obs'=>'Registro em aberto aguardando serviço','data'=>Carbon::now()->toDateTimeString()]);
+            }
         }
 
         return $id;

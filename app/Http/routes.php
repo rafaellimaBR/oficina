@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/teste',function(){
-    return \App\Peca::PesquisarPorTudo('te')->get();
+    return \App\Contrato::find(15102230324)->historicos->last()->status->nome;
 
 });
 
@@ -100,6 +100,7 @@ Route::group(['prefix' => 'admin'], function () {
 //    Contrato
     Route::get('/contrato',              ['as'=>'contrato.index','uses'=>'Admin\ContratoController@index']);
     Route::get('/contrato/novo',         ['as'=>'contrato.novo','uses'=>'Admin\ContratoController@novo']);
+    Route::get('/contrato/orcamento/novo',         ['as'=>'contrato.novoorcamento','uses'=>'Admin\ContratoController@novoOrcamento']);
     Route::get('/contrato/editar/{id}',  ['as'=>'contrato.editar','uses'=>'Admin\ContratoController@editar']);
     Route::post('/contrato/cadastrar',   ['as'=>'contrato.cadastrar','uses'=>'Admin\ContratoController@cadastrar']);
     Route::post('/contrato/atualizar',   ['as'=>'contrato.atualizar','uses'=>'Admin\ContratoController@atualizar']);
@@ -109,6 +110,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/contrato/remServico',  ['as'=>'contrato.remservico','uses'=>'Admin\ContratoController@remServico']);
     Route::post('/contrato/addPeca',        ['as'=>'contrato.addpeca','uses'=>'Admin\ContratoController@addPeca']);
     Route::post('/contrato/rmPeca',        ['as'=>'contrato.rmPeca','uses'=>'Admin\ContratoController@rmPeca']);
+    Route::post('/contrato/cancelar',        ['as'=>'contrato.cancelar','uses'=>'Admin\ContratoController@cancelar']);
+    Route::post('/contrato/finalizar',        ['as'=>'contrato.finalizar','uses'=>'Admin\ContratoController@finalizar']);
+    Route::post('/contrato/andamento',        ['as'=>'contrato.andamento','uses'=>'Admin\ContratoController@andamento']);
+    Route::post('/contrato/autorizar',        ['as'=>'contrato.autorizar','uses'=>'Admin\ContratoController@autorizar']);
+    Route::post('/contrato/aberto',        ['as'=>'contrato.aberto','uses'=>'Admin\ContratoController@aberto']);
+
 
     Route::get('/configuracao',             ['as'=>'configuracao.editar','uses'=>'Admin\ConfiguracaoController@editar']);
     Route::post('/configuracao/atualizar',   ['as'=>'configuracao.atualizar','uses'=>'Admin\ConfiguracaoController@atualizar']);
@@ -122,6 +129,15 @@ Route::group(['prefix' => 'admin'], function () {
         }
         $view->with('marcas',$dados);
     });
+    View::composer(['admin.contrato.index'],function($view) {
+        $veiculos    =   \App\Veiculo::all();
+        $dados = [];
+
+        foreach($veiculos as $r){
+            $dados[$r->id] = $r->id.' | '.$r->modelo->nome;
+        }
+        $view->with('veiculos',$dados);
+    });
     View::composer(['admin.veiculo.index'],function($view) {
         $modelos    =   \App\Modelo::all();
         $dados = [];
@@ -131,12 +147,12 @@ Route::group(['prefix' => 'admin'], function () {
         }
         $view->with('modelos',$dados);
     });
-    View::composer(['admin.veiculo.includes.formulario'],function($view) {
+    View::composer(['admin.veiculo.includes.formulario','admin.contrato.index'],function($view) {
         $clientes    =   \App\Cliente::all();
         $dados = [];
 
         foreach($clientes as $r){
-            $dados[$r->id] = $r->nome;
+            $dados[$r->id] = $r->nome.' | '.$r->registro;
         }
         $view->with('clientes',$dados);
     });
@@ -157,5 +173,14 @@ Route::group(['prefix' => 'admin'], function () {
             $dados[$r->id] = $r->nome;
         }
         $view->with('servicos',$dados);
+    });
+    View::composer(['admin.configuracao.includes.formulario','admin.contrato.index'],function($view) {
+        $status    =   \App\Status::all();
+        $dados = [];
+
+        foreach($status as $r){
+            $dados[$r->id] = $r->nome;
+        }
+        $view->with('status',$dados);
     });
 });

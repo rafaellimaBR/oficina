@@ -26,10 +26,9 @@ class ConfiguracaoController extends Controller
     {
         try{
 
-
             Configuracao::atualizar(request());
 
-            return view('admin.configuracao.edicao',['conf'=>Configuracao::find(1)]);
+            return redirect()->route('configuracao.editar');
         }catch (\Exception $e){
             return $e->getMessage();
         }

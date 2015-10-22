@@ -17,6 +17,7 @@ class CriarStatusTabela extends Migration
 
             $tabela->increments('id');
             $tabela->string('nome',80);
+            $tabela->text('obs');
             $tabela->string('cor',10);
 
 

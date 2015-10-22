@@ -27,6 +27,16 @@ class Configuracao extends Model
         $conf->cidade     =   $req->get('cidade');
         $conf->estado     =   $req->get('estado');
 
+        $contrato   =   serialize([
+            'orcamento'     =>  $req->get('orcamento'),
+            'andamento'     =>  $req->get('andamento'),
+            'aberto'        =>  $req->get('aberto'),
+            'cancelado'     =>  $req->get('cancelado'),
+            'finalizado'    =>  $req->get('finalizado'),
+            'novo'          =>  $req->get('novo'),
+        ]);
+        $conf->contrato     =   $contrato;
+
         if($req->file('logo') != null){
             $caminho    =   base_path().'/public/img/';
 

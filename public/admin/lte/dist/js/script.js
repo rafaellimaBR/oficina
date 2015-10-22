@@ -409,11 +409,12 @@ $(document).ready(function(){
         timePicker: true,
         showWeekNumbers:true,
         locale: {
+            format: 'DD/MM/YYYY HH:mm:ss',
             applyLabel: 'Pronto',
             cancelLabel: 'Cancelar',
             daysOfWeek: ['Do', 'Se', 'Te', 'Qu', 'Qi', 'Se','Sa'],
             monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-            format: 'DD/MM/YYYY HH:mm:ss',
+
         },
 
     });

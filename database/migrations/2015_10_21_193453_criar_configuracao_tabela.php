@@ -22,6 +22,7 @@ class CriarConfiguracaoTabela extends Migration
             $tabela->string('telefone1',30);
             $tabela->string('telefone2',30);
             $tabela->string('telefone3',30);
+            $tabela->string('cep',30);
             $tabela->string('endereco',100);
             $tabela->string('numero',20);
             $tabela->string('bairro',100);

@@ -5,7 +5,8 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="botoes">
-                <a href="{!! route('contrato.novo') !!}" class="btn btn-success"><i class="fa fa-plus"> </i> Novo Registro</a>
+                <a href="{!! route('contrato.novo') !!}" class="btn btn-success"><i class="fa fa-plus"> </i> Nova Ordem de Serviço</a>
+                <a href="{!! route('contrato.novoorcamento') !!}" class="btn btn-warning"><i class="fa fa-plus"> </i> Novo Orçamento</a>
             </div>
         </div>
     </div>
@@ -18,11 +19,21 @@
                 <div class="row">
                     {!! Form::open(['route'=>['contrato.pesquisa'],'method'=>'post']) !!}
                     <div class="form-group col-xs-3">
-
-                        {!! Form::label('nome','Nome') !!}
-                        {!! Form::text('nome','',['class'=>'form-control',]) !!}
+                        {!! Form::label('cliente','Cliente') !!}
+                        {!! Form::select('cliente',[0=>'Todos']+$clientes, 0, ['class'=>'form-control select2']) !!}
 
                     </div>
+                    <div class="form-group col-xs-3">
+                        {!! Form::label('veiculo','Veiculo') !!}
+                        {!! Form::select('veiculo',[0=>'Todos']+$veiculos, 0, ['class'=>'form-control select2 ']) !!}
+
+                    </div>
+                    <div class="form-group col-xs-2">
+                        {!! Form::label('stauts','Status') !!}
+                        {!! Form::select('stauts',[0=>'Tudo']+$status, 0 , ['class'=>'form-control select2 ']) !!}
+
+                    </div>
+
                     <div class="form-group col-xs-1 pull-right">
 
                         {!! Form::label('pesquisa','Pesquisar') !!}
@@ -40,6 +51,7 @@
                         <th style="width:30%">Nome</th>
                         <th style="width:10%">Veiculo</th>
                         <th style="width:15%">Modelo</th>
+                        <th>Situação</th>
                         <th>Entrada em</th>
                         <th style="width:13%"></th>
 
@@ -52,6 +64,7 @@
                         <td>{!! $r->cliente->nome !!}</td>
                         <td><span class="uppercase">{!! $r->veiculo->id !!}</span></td>
                         <td>{!! $r->veiculo->modelo->nome !!}</td>
+                        <td><span style="background: {!! $r->status->last()->cor !!}; color: #ffffff; padding: 3px;border-radius: 5px; font-weight: bolder">{!! $r->status->last()->nome !!}</span></td>
                         <td>{!! date_format($r->created_at,'d/m/Y')." às ".date_format($r->created_at,'H:i') !!}</td>
                         <td>
                             <a href="#" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i></a>
@@ -63,10 +76,13 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Criado em</th>
-                        <td></td>
+                        <th >ID</th>
+                        <th >Nome</th>
+                        <th >Veiculo</th>
+                        <th >Modelo</th>
+                        <th>Situação</th>
+                        <th>Entrada em</th>
+                        <th ></th>
                     </tr>
                     </tfoot>
                 </table>

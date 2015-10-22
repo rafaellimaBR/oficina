@@ -3,8 +3,8 @@
 @section('conteudo')
 
     {!! Form::open(['route'=>['contrato.cadastrar'],'method'=>'post']) !!}
-        {!! Form::hidden('tipo-registro','ordem') !!}
 
+        {!! Form::hidden('tipo-registro','orcamento') !!}
         @include('admin.contrato.includes.formulario')
 
 

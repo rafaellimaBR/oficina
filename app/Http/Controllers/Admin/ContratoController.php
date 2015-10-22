@@ -27,6 +27,12 @@ class ContratoController extends Controller
         return view('admin.contrato.novo');
     }
 
+    public function novoOrcamento()
+    {
+        return view('admin.contrato.novo-orcamento');
+    }
+    
+
     public function cadastrar()
     {
         try{
@@ -67,6 +73,35 @@ class ContratoController extends Controller
         }catch (\Exception $e){
             return $e->getMessage();
         }
+    }
+
+    public function autorizar()
+    {
+        return request()->all();
+    }
+
+    public function finalizar()
+    {
+
+
+    }
+
+    public function cancelar()
+    {
+
+
+    }
+
+    public function andamento()
+    {
+
+
+    }
+
+    public function aberto()
+    {
+
+
     }
 
     public function excluir()
