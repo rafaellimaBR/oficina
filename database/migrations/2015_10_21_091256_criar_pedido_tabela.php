@@ -19,6 +19,7 @@ class CriarPedidoTabela extends Migration
             $tabela->bigInteger('contrato_id',false,true);
             $tabela->integer('peca_id',false,true);
             $tabela->decimal('valor',9,2);
+            $tabela->decimal('valor_total',9,2);
             $tabela->integer('qnt',false,false);
             $tabela->timestamps();
 

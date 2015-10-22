@@ -110,6 +110,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/contrato/addPeca',        ['as'=>'contrato.addpeca','uses'=>'Admin\ContratoController@addPeca']);
     Route::post('/contrato/rmPeca',        ['as'=>'contrato.rmPeca','uses'=>'Admin\ContratoController@rmPeca']);
 
+    Route::get('/configuracao',             ['as'=>'configuracao.editar','uses'=>'Admin\ConfiguracaoController@editar']);
+    Route::post('/configuracao/atualizar',   ['as'=>'configuracao.atualizar','uses'=>'Admin\ConfiguracaoController@atualizar']);
+
     View::composer(['admin.modelo.includes.formulario','admin.modelo.index','admin.veiculo.includes.formulario'],function($view) {
         $marcas    =   \App\Marca::all();
         $dados = [];

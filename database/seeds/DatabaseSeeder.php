@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             $this->call(ModeloSeeder::class);
             $this->call(ServicoSeeder::class);
             $this->call(CategoriaSeeder::class);
+            $this->call(StatusSeeder::class);
+            $this->call(ConfiguracaoSeeder::class);
 
         Model::reguard();
     }

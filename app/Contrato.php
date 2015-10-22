@@ -44,12 +44,22 @@ class Contrato extends Model
     public function pecas()
     {
         return $this->belongsToMany('App\Peca','pedidos','contrato_id','peca_id')
-            ->withPivot('valor','qnt');
+            ->withPivot('valor','qnt','valor_total');
     }
 
     public function pedidos()
     {
         return $this->hasMany('App\Pedido','contrato_id');
+    }
+
+    public function status()
+    {
+        return $this->belongsToMany('App\Status','historicos','contrato_id','status_id');
+    }
+
+    public function historicos()
+    {
+        return $this->hasMany('App\Historico','contrato_id');
     }
 
     public static function validar($dados)
@@ -153,7 +163,7 @@ class Contrato extends Model
     public static function vincularPeca(Request $req)
     {
         $contrato   =   Contrato::find($req->get('contrato'));
-        $contrato->pecas()->attach($req->get('peca'),['valor'=>$req->get('valor'),'qnt'=>$req->get('qnt')]);
+        $contrato->pecas()->attach($req->get('peca'),['valor'=>$req->get('valor'),'qnt'=>$req->get('qnt'),'valor_total'=>$req->get('valor')*$req->get('qnt')]);
         $contrato->save();
     }
     public static function desvincularPeca(Request $req)

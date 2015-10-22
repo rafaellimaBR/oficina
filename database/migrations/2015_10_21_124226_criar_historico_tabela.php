@@ -21,7 +21,7 @@ class CriarHistoricoTabela extends Migration
             $tabela->text('obs');
             $tabela->dateTime('data');
 
-            $tabela->foreign('status_id')->references('id')->on('status')->onDelete('casacade');
+            $tabela->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
             $tabela->foreign('contrato_id')->references('id')->on('contratos')->onDelete('cascade');
         });
     }

@@ -12,13 +12,13 @@
             <td>{!! $r->peca->descricao !!}</td>
             <td>{!! $r->qnt !!}</td>
             <td>{!! $r->valor !!}</td>
-            <td>{!! $r->qnt * $r->valor !!}</td>
+            <td>{!! $r->valor_total !!}</td>
             <td><a href="#" class="btn btn-xs btn-danger excluir-peca" contrato="{!! $contrato->id !!}" peca="{!! $r->peca->id !!}"><i class="fa fa-remove "></i></a></td>
         </tr>
     @endforeach
     </tbody>
 </table>
-<h4>Valor: <b>R$ {!! $contrato->pedidos->sum('valor') !!}</b></h4>
+<h4>Valor: <b>R$ {!! $contrato->pedidos->sum('valor_total') !!}</b></h4>
 
 
 
