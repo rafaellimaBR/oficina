@@ -141,6 +141,50 @@ class Contrato extends Model
         return Marca::PesquisarPorNome($req->get('nome'));
     }
 
+    public static function cancelar(Request $req)
+    {
+        $contrato       =   Contrato::find($req->get('id'));
+
+        $contrato->status()->attach(unserialize(Configuracao::find(1)->contrato)['cancelado'],['obs'=>$req->get('obs'),'data'=>$req->get('data')]);
+
+        if($contrato->save() == false){
+            throw new \Exception('Não foi possível vincular o status', 402);
+        }
+    }
+
+    public static function finalizar(Request $req)
+    {
+        $contrato       =   Contrato::find($req->get('id'));
+
+        $contrato->status()->attach(unserialize(Configuracao::find(1)->contrato)['finalizado'],['obs'=>$req->get('obs'),'data'=>$req->get('data')]);
+
+        if($contrato->save() == false){
+            throw new \Exception('Não foi possível vincular o status', 402);
+        }
+    }
+
+    public static function andamento(Request $req)
+    {
+        $contrato       =   Contrato::find($req->get('id'));
+
+        $contrato->status()->attach(unserialize(Configuracao::find(1)->contrato)['andamento'],['obs'=>$req->get('obs'),'data'=>$req->get('data')]);
+
+        if($contrato->save() == false){
+            throw new \Exception('Não foi possível vincular o status', 402);
+        }
+    }
+
+    public static function aberto(Request $req)
+    {
+        $contrato       =   Contrato::find($req->get('id'));
+
+        $contrato->status()->attach(unserialize(Configuracao::find(1)->contrato)['aberto'],['obs'=>$req->get('obs'),'data'=>$req->get('data')]);
+
+        if($contrato->save() == false){
+            throw new \Exception('Não foi possível vincular o status', 402);
+        }
+    }
+
     private static function gerarID()
     {
         $retorno    =   false;

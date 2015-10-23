@@ -35,6 +35,8 @@ class VeiculoController extends Controller
     public function cadastrar()
     {
         try{
+//            return request()->all();
+
             $validacao  =   Veiculo::validar(request()->all());
 
             if($validacao->fails()){

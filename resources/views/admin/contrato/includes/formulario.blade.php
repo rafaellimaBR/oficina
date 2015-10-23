@@ -82,25 +82,25 @@
                             <button type="submit" class="btn btn-success"><i class="fa  fa-edit"> </i> Editar</button>
                             <a href="{!! route('contrato.index') !!}" class="btn btn-default"><i class="fa   fa-mail-reply"> </i> Voltar</a>
                         </div>
-                        <div class="form-group col-xs-3 pull-right">
+                        <div class="form-group col-xs-4 pull-right">
 
                             @if($contrato->status->last()->id == unserialize(\App\Configuracao::find(1)->contrato)['orcamento'])
 
-                                <a href="#" class="btn btn-success" data-toggle="modal" data-target="#form-autorizar" ></i> Autorizado</a>
-                                <a href="#" class="btn btn-primary"data-toggle="modal" data-target="#form-finalizar"> </i> Finalizado</a>
-                                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#form-cancelar"> </i> Cancelado</a>
+                                <a href="#" class="btn btn-success" data-toggle="modal" data-target="#form-autorizar" ></i> Autorizar</a>
+                                <a href="#" class="btn btn-primary"data-toggle="modal" data-target="#form-finalizar"> </i> Finalizar</a>
+                                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#form-cancelar"> </i> Cancelar</a>
 
                             @elseif($contrato->status->last()->id == unserialize(\App\Configuracao::find(1)->contrato)['aberto'])
 
-                                <a href="#" class="btn btn-success"></i> Em Andamento</a>
-                                <a href="#" class="btn btn-danger"> </i> Cancelado</a>
+                                <a href="#" class="btn btn-success" data-toggle="modal" data-target="#form-andamento"></i> Em Andamento</a>
+                                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#form-cancelar"> </i> Cancelar</a>
 
                             @elseif($contrato->status->last()->id == unserialize(\App\Configuracao::find(1)->contrato)['andamento'])
 
-                                <a href="#" class="btn btn-primary"> </i> Finalizado</a>
-                                <a href="#" class="btn btn-danger"> </i> Cancelado</a>
+                                <a href="#" class="btn btn-primary"data-toggle="modal" data-target="#form-finalizar"> </i> Finalizar</a>
+                                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#form-cancelar"> </i> Cancelar</a>
 
-                            @elseif($contrato->status->last()->id == unserialize(\App\Configuracao::find(1)->contrato)['andamento'])
+                            @elseif($contrato->status->last()->id == unserialize(\App\Configuracao::find(1)->contrato)['finalizado'])
 
                             @endif
                         </div>

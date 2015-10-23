@@ -51,7 +51,7 @@ class Veiculo extends Model
         $veiculo                =   new Veiculo();
         $veiculo->id            =   $req->get('id');
         $veiculo->cliente()->associate(Cliente::find($req->get('cliente')));
-        $veiculo->modelo()->associate(Cliente::find($req->get('modelo')));
+        $veiculo->modelo()->associate(Modelo::find($req->get('modelo')));
         $veiculo->cidade        =   $req->get('cidade');
         $veiculo->estado        =   $req->get('estado');
         $veiculo->cor           =   $req->get('cor');
@@ -69,7 +69,7 @@ class Veiculo extends Model
         $veiculo            =   Veiculo::find($req->get('id'));
         $veiculo->id            =   $req->get('id');
         $veiculo->cliente()->associate(Cliente::find($req->get('cliente')));
-        $veiculo->modelo()->associate(Cliente::find($req->get('modelo')));
+        $veiculo->modelo()->associate(Modelo::find($req->get('modelo')));
         $veiculo->cidade        =   $req->get('cidade');
         $veiculo->estado        =   $req->get('estado');
         $veiculo->cor           =   $req->get('cor');

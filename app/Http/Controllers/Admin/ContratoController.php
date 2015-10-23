@@ -77,24 +77,51 @@ class ContratoController extends Controller
 
     public function autorizar()
     {
-        return request()->all();
+        try{
+//            return request()->all();
+            Contrato::aberto(request());
+
+            return redirect()->route('contrato.editar',['id'=>request()->get('id')]);
+        }catch (\Exception $e){
+            return $e->getMessage();
+        }
     }
 
     public function finalizar()
     {
+        try{
+//            return request()->all();
+            Contrato::finalizar(request());
 
-
+            return redirect()->route('contrato.editar',['id'=>request()->get('id')]);
+        }catch (\Exception $e){
+            return $e->getMessage();
+        }
     }
 
     public function cancelar()
     {
+        try{
+//            return request()->all();
+            Contrato::cancelar(request());
 
+            return redirect()->route('contrato.editar',['id'=>request()->get('id')]);
+        }catch (\Exception $e){
+            return $e->getMessage();
+        }
 
     }
 
     public function andamento()
     {
+        try{
+//            return request()->all();
+            Contrato::andamento(request());
 
+            return redirect()->route('contrato.editar',['id'=>request()->get('id')]);
+        }catch (\Exception $e){
+            return $e->getMessage();
+        }
 
     }
 

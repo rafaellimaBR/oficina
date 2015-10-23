@@ -15,6 +15,7 @@
     @include('admin.contrato.includes.cancelar',['contrato_id'=>$contrato->id])
     @include('admin.contrato.includes.finalizar',['contrato_id'=>$contrato->id])
     @include('admin.contrato.includes.autorizar',['contrato_id'=>$contrato->id])
+    @include('admin.contrato.includes.andamento',['contrato_id'=>$contrato->id])
 
 
 

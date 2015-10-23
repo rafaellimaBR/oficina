@@ -18,7 +18,7 @@
                 <h3 class="box-title">Titulo Pagina</h3>
                 <div class="row">
                     {!! Form::open(['route'=>['contrato.pesquisa'],'method'=>'post']) !!}
-                    <div class="form-group col-xs-3">
+                    <div class="form-group col-xs-4">
                         {!! Form::label('cliente','Cliente') !!}
                         {!! Form::select('cliente',[0=>'Todos']+$clientes, 0, ['class'=>'form-control select2']) !!}
 
@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group col-xs-2">
                         {!! Form::label('stauts','Status') !!}
-                        {!! Form::select('stauts',[0=>'Tudo']+$status, 0 , ['class'=>'form-control select2 ']) !!}
+                        {!! Form::select('stauts',[0=>'Todos']+$status, 0 , ['class'=>'form-control select2 ']) !!}
 
                     </div>
 

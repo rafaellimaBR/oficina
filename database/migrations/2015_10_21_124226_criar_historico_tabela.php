@@ -19,7 +19,7 @@ class CriarHistoricoTabela extends Migration
             $tabela->integer('status_id',false,true);
             $tabela->bigInteger('contrato_id',false,true);
             $tabela->text('obs');
-            $tabela->dateTime('data');
+            $tabela->string('data',40);
             $tabela->timestamps();
 
             $tabela->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
