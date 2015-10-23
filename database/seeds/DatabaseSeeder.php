@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             $this->call(CategoriaSeeder::class);
             $this->call(StatusSeeder::class);
             $this->call(ConfiguracaoSeeder::class);
+            $this->call(VeiculoSeeder::class);
 
         Model::reguard();
     }

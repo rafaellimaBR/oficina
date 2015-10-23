@@ -53,6 +53,7 @@
                         <th style="width:15%">Modelo</th>
                         <th>Situação</th>
                         <th>Entrada em</th>
+                        <th>Valor</th>
                         <th style="width:13%"></th>
 
                     </tr>
@@ -66,6 +67,7 @@
                         <td>{!! $r->veiculo->modelo->nome !!}</td>
                         <td><span style="background: {!! $r->status->last()->cor !!}; color: #ffffff; padding: 3px;border-radius: 5px; font-weight: bolder">{!! $r->status->last()->nome !!}</span></td>
                         <td>{!! date_format($r->created_at,'d/m/Y')." às ".date_format($r->created_at,'H:i') !!}</td>
+                        <td>R$ {!! $r->maoobra->sum('valor') + $r->pedidos->sum('valor_total')!!}</td>
                         <td>
                             <a href="#" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i></a>
                             <a href="{!! route('contrato.editar',['id'=>$r->id]) !!}" class="btn btn-xs btn-success"><i class="fa fa-edit"></i></a>
@@ -82,6 +84,7 @@
                         <th >Modelo</th>
                         <th>Situação</th>
                         <th>Entrada em</th>
+                        <th>Valor</th>
                         <th ></th>
                     </tr>
                     </tfoot>

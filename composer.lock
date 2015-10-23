@@ -4,9 +4,57 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9705103d451905fb0ebb2a40e408b27f",
-    "content-hash": "a02bc885ed88a4b0e9b06db6ec76ac4b",
+    "hash": "86ecdcf8e718c3483ee34a238c8bdbe4",
+    "content-hash": "94df2668d91936c9fbcd4fa5ce21b612",
     "packages": [
+        {
+            "name": "barryvdh/laravel-dompdf",
+            "version": "v0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvdh/laravel-dompdf.git",
+                "reference": "6acded2b805cd1818dd31e47f971eedf51e15c30"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-dompdf/zipball/6acded2b805cd1818dd31e47f971eedf51e15c30",
+                "reference": "6acded2b805cd1818dd31e47f971eedf51e15c30",
+                "shasum": ""
+            },
+            "require": {
+                "dompdf/dompdf": "0.6.*",
+                "illuminate/support": "5.0.x|5.1.x",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Barryvdh\\DomPDF\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "A DOMPDF Wrapper for Laravel",
+            "keywords": [
+                "dompdf",
+                "laravel",
+                "pdf"
+            ],
+            "time": "2015-06-11 12:54:07"
+        },
         {
             "name": "barryvdh/laravel-ide-helper",
             "version": "v2.1.0",
@@ -279,6 +327,47 @@
                 "string"
             ],
             "time": "2014-12-20 21:24:13"
+        },
+        {
+            "name": "dompdf/dompdf",
+            "version": "v0.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dompdf/dompdf.git",
+                "reference": "cf7d8a0a27270418850cc7d7ea532159e5eeb3eb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dompdf/dompdf/zipball/cf7d8a0a27270418850cc7d7ea532159e5eeb3eb",
+                "reference": "cf7d8a0a27270418850cc7d7ea532159e5eeb3eb",
+                "shasum": ""
+            },
+            "require": {
+                "phenx/php-font-lib": "0.2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "include/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Ménager",
+                    "email": "fabien.menager@gmail.com"
+                },
+                {
+                    "name": "Brian Sweeney",
+                    "email": "eclecticgeek@gmail.com"
+                }
+            ],
+            "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
+            "homepage": "https://github.com/dompdf/dompdf",
+            "time": "2014-03-11 01:59:52"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -903,16 +992,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.0.9",
+            "version": "1.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "7647ac58c35ece044b939e01c85dbaa73ed26351"
+                "reference": "2fa50aa2f17066fa74ba00d943e8cee1a98284af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/7647ac58c35ece044b939e01c85dbaa73ed26351",
-                "reference": "7647ac58c35ece044b939e01c85dbaa73ed26351",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/2fa50aa2f17066fa74ba00d943e8cee1a98284af",
+                "reference": "2fa50aa2f17066fa74ba00d943e8cee1a98284af",
                 "shasum": ""
             },
             "require": {
@@ -944,7 +1033,41 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2015-10-20 15:22:41"
+            "time": "2015-10-23 13:21:37"
+        },
+        {
+            "name": "phenx/php-font-lib",
+            "version": "0.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PhenX/php-font-lib.git",
+                "reference": "c30c7fc00a6b0d863e9bb4c5d5dd015298b2dc82"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PhenX/php-font-lib/zipball/c30c7fc00a6b0d863e9bb4c5d5dd015298b2dc82",
+                "reference": "c30c7fc00a6b0d863e9bb4c5d5dd015298b2dc82",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "classes/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Ménager",
+                    "email": "fabien.menager@gmail.com"
+                }
+            ],
+            "description": "A library to read, parse, export and make subsets of different types of font files.",
+            "homepage": "https://github.com/PhenX/php-font-lib",
+            "time": "2014-02-01 15:22:28"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -2583,16 +2706,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.15",
+            "version": "4.8.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "be8f7b9eacf8243940f8412f8b4a9a434c73dd7b"
+                "reference": "625f8c345606ed0f3a141dfb88f4116f0e22978e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/be8f7b9eacf8243940f8412f8b4a9a434c73dd7b",
-                "reference": "be8f7b9eacf8243940f8412f8b4a9a434c73dd7b",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/625f8c345606ed0f3a141dfb88f4116f0e22978e",
+                "reference": "625f8c345606ed0f3a141dfb88f4116f0e22978e",
                 "shasum": ""
             },
             "require": {
@@ -2651,7 +2774,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-10-22 09:05:37"
+            "time": "2015-10-23 06:48:33"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

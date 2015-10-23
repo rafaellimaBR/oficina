@@ -39,6 +39,7 @@ class Contrato extends Model
     public function maoobra()
     {
         return $this->hasMany('App\Maoobra','contrato_id');
+
     }
 
     public function pecas()
@@ -178,12 +179,17 @@ class Contrato extends Model
     {
         $contrato       =   Contrato::find($req->get('id'));
 
-        $contrato->status()->attach(unserialize(Configuracao::find(1)->contrato)['aberto'],['obs'=>$req->get('obs'),'data'=>$req->get('data')]);
+        if(Pedido::faturarPecas($req->get('id'))){
+            $contrato->status()->attach(unserialize(Configuracao::find(1)->contrato)['aberto'],['obs'=>$req->get('obs'),'data'=>$req->get('data')]);
+        }
+
+
 
         if($contrato->save() == false){
             throw new \Exception('Não foi possível vincular o status', 402);
         }
     }
+
 
     private static function gerarID()
     {

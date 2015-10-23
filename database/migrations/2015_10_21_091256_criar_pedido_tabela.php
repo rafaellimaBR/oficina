@@ -21,6 +21,7 @@ class CriarPedidoTabela extends Migration
             $tabela->decimal('valor',9,2);
             $tabela->decimal('valor_total',9,2);
             $tabela->integer('qnt',false,false);
+            $tabela->boolean('faturado')->default(false);
             $tabela->timestamps();
 
             $tabela->foreign('contrato_id')->references('id')->on('contratos')->onDelete('cascade');

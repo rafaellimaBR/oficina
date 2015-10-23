@@ -15,7 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/teste',function(){
-    return \App\Contrato::find(15102230324)->historicos->last()->status->nome;
+    $contrato   =   \App\Contrato::find(15102356395);
+//    return $contrato;
+//    dd(\App\Pedido::faturarPecas(1));
+    return \App\Pedido::faturarPecas(1);
+
 
 });
 
@@ -99,7 +103,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 //    Contrato
     Route::get('/contrato',              ['as'=>'contrato.index','uses'=>'Admin\ContratoController@index']);
-    Route::get('/contrato/novo',         ['as'=>'contrato.novo','uses'=>'Admin\ContratoController@novo']);
+    Route::get('/contrato/ordemservico/novo',         ['as'=>'contrato.novo','uses'=>'Admin\ContratoController@novo']);
     Route::get('/contrato/orcamento/novo',         ['as'=>'contrato.novoorcamento','uses'=>'Admin\ContratoController@novoOrcamento']);
     Route::get('/contrato/editar/{id}',  ['as'=>'contrato.editar','uses'=>'Admin\ContratoController@editar']);
     Route::post('/contrato/cadastrar',   ['as'=>'contrato.cadastrar','uses'=>'Admin\ContratoController@cadastrar']);
