@@ -117,7 +117,7 @@
                 </div><!-- /.tab-pane -->
                 @if(isset($contrato))
                     <div id="servicos" class="tab-pane ">
-
+                        @if($contrato->status->last()->id != unserialize(\App\Configuracao::find(1)->contrato)['finalizado'] and $contrato->status->last()->id != unserialize(\App\Configuracao::find(1)->contrato)['cancelado'])
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <h5>{!! Form::label('servico','Serviço') !!}</h5>
@@ -139,6 +139,7 @@
                                 </div>
                             </div>
                         </div><!--/row-->
+                        @endif
 
                         <div class="tabela-servicos">
                             @include('admin.contrato.includes.servicos')
@@ -146,6 +147,7 @@
 
                     </div><!-- /.tab-pane -->
                     <div id="pecas" class="tab-pane">
+                        @if($contrato->status->last()->id != unserialize(\App\Configuracao::find(1)->contrato)['finalizado'] and $contrato->status->last()->id != unserialize(\App\Configuracao::find(1)->contrato)['cancelado'])
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <h5>{!! Form::label('paca','Peças') !!}</h5>
@@ -177,6 +179,7 @@
                                 </div>
                             </div>
                         </div><!--/row-->
+                        @endif
                         <div class="tabela-pecas">
                             @include('admin.contrato.includes.pecas')
                         </div>

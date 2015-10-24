@@ -35,7 +35,7 @@ class ClienteController extends Controller
 
             $cliente    =   Cliente::gravar(request());
 
-            return redirect()->route('cliente.editar',['id'=>$cliente->id]);
+            return redirect()->route('cliente.editar',['id'=>$cliente->id])->with('alerta',['tipo'=>'success','msg'=>'Cadastrado com sucesso.','icon'=>'check']);
 
         }catch (\Exception $e){
             return $e->getMessage();
@@ -43,8 +43,15 @@ class ClienteController extends Controller
     }
     public function editar($id)
     {
+
         $cliente    =   Cliente::find($id);
-        return view('admin.cliente.edicao')->with('cliente',$cliente);
+
+        if($cliente == null){
+            return redirect()->route('cliente.index')->with('alerta',['tipo'=>'warning','msg'=>'Nenhum registro foi encontrado.','icon'=>'warning']);
+        }else{
+            return view('admin.cliente.edicao')->with('cliente',$cliente);
+        }
+
     }
 
     public function atualizar()
@@ -58,7 +65,7 @@ class ClienteController extends Controller
 
             Cliente::atualizar(request());
 
-            return redirect()->route('cliente.index');
+            return redirect()->route('cliente.index')->with('alerta',['tipo'=>'success','msg'=>'Editado com sucesso.','icon'=>'check']);;
 
         }catch (\Exception $e){
             return $e->getMessage();
@@ -69,7 +76,7 @@ class ClienteController extends Controller
     {
         try {
             Cliente::excluir(request());
-            return redirect()->route('cliente.index');
+            return redirect()->route('cliente.index')->with('alerta',['tipo'=>'success','msg'=>'Excluir com sucesso.','icon'=>'check']);
         }catch (\Exception $e){
             return "Error ao cadastrar: ".$e->getMessage();
         }
@@ -92,7 +99,7 @@ class ClienteController extends Controller
 
             return response()->json($retorno);
         }else{
-            return 'Acesso negado';
+            return redirect()->route('cliente.index')->with('alerta',['tipo'=>'danger','msg'=>'Acesso negado.','icon'=>'ban']);
         }
     }
     public function pesquisar()
@@ -104,7 +111,7 @@ class ClienteController extends Controller
             return view('admin.cliente.index')->with('clientes',$clientes);
 
         }catch(\Exception $e){
-            return "error : ".$e->getMessage();
+            return redirect()->route('cliente.index')->with('alerta',['tipo'=>'danger','msg'=>$e->getMessage(),'icon'=>'ban']);
         }
     }
 
@@ -123,7 +130,7 @@ class ClienteController extends Controller
                 return response()->json(['error'=>$e->getMessage()]);
             }
        }else{
-
+           return redirect()->route('cliente.index')->with('alerta',['tipo'=>'danger','msg'=>'Acesso negado.','icon'=>'ban']);
        }
     }
 }

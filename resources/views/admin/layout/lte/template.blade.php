@@ -45,6 +45,7 @@
 <div class="wrapper">
     <input type="hidden" id="url" value="{!! URL::to('') !!}" name="URL">
     @include('admin.layout.lte.includes.barra-superior')
+    {!! $icon   =   "teste" !!}
 
     <!-- =============================================== -->
 

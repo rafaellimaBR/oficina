@@ -4,7 +4,9 @@
         <th>Qnt</th>
         <th>Valor</th>
         <th>Total</th>
+        @if($contrato->status->last()->id != unserialize(\App\Configuracao::find(1)->contrato)['finalizado'] and $contrato->status->last()->id != unserialize(\App\Configuracao::find(1)->contrato)['cancelado'])
         <th></th>
+        @endif
     </thead>
     <tbody>
     @foreach($contrato->pedidos as $r)
@@ -13,7 +15,9 @@
             <td>{!! $r->qnt !!}</td>
             <td>{!! $r->valor !!}</td>
             <td>{!! $r->valor_total !!}</td>
+            @if($contrato->status->last()->id != unserialize(\App\Configuracao::find(1)->contrato)['finalizado'] and $contrato->status->last()->id != unserialize(\App\Configuracao::find(1)->contrato)['cancelado'])
             <td><a href="#" class="btn btn-xs btn-danger excluir-peca" pedido="{!! $r->id !!}" contrato="{!! $contrato->id !!}" peca="{!! $r->peca->id !!}"><i class="fa fa-remove "></i></a></td>
+            @endif
         </tr>
     @endforeach
     </tbody>

@@ -44,7 +44,7 @@ class ContratoController extends Controller
 
             $id    =   Contrato::gravar(request());
 
-            return redirect()->route('contrato.editar',['id'=>$id])->with('alerta','deu');
+            return redirect()->route('contrato.editar',['id'=>$id])->with('alerta',['tipo'=>'success','msg'=>'Cadastrado com sucesso.','icon'=>'check']);
 
         }catch (\Exception $e){
             return $e->getMessage();
@@ -141,6 +141,16 @@ class ContratoController extends Controller
         }
     }
 
+    public function detalhes($id)
+    {
+        $contrato   =   Contrato::find($id);
+        if($contrato    ==  null){
+            return redirect()->route('contrato.index')->with('alerta',['tipo'=>'warning','msg'=>'Nenhum registroi foi encontrado.','icon'=>'warning']);
+        }else{
+            return view('admin.contrato.detalhes',['contrato'=>$contrato]);
+        }
+    }
+    
     public function pesquisar()
     {
         try{
@@ -238,6 +248,16 @@ class ContratoController extends Controller
 
         }else{
             return "Acesso negado.";
+        }
+    }
+
+    public function download($id)
+    {
+        $contrato   =   Contrato::find($id);
+        if($contrato    !=  null){
+            $pdf    =   \PDF::loadView('admin.contrato.pdf');
+
+            return $pdf->download($id.".pdf");
         }
     }
 }

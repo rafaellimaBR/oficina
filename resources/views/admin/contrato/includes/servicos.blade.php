@@ -2,14 +2,18 @@
     <thead>
         <th>Servico</th>
         <th>Valor</th>
+        @if($contrato->status->last()->id != unserialize(\App\Configuracao::find(1)->contrato)['finalizado'] and $contrato->status->last()->id != unserialize(\App\Configuracao::find(1)->contrato)['cancelado'])
         <th></th>
+        @endif
     </thead>
     <tbody>
     @foreach($contrato->maoobra as $r)
         <tr>
             <td>{!! $r->servico->nome !!}</td>
             <td>{!! $r->valor !!}</td>
+            @if($contrato->status->last()->id != unserialize(\App\Configuracao::find(1)->contrato)['finalizado'] and $contrato->status->last()->id != unserialize(\App\Configuracao::find(1)->contrato)['cancelado'])
             <td><a href="#" class="btn btn-xs btn-danger excluir-servico" contrato="{!! $contrato->id !!}" servico="{!! $r->servico->id !!}"><i class="fa fa-remove "></i></a></td>
+            @endif
         </tr>
     @endforeach
     </tbody>

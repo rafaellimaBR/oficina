@@ -21,7 +21,7 @@
         <ul class="sidebar-menu">
             <li class="header">MENU PRINCIPAL</li>
             <li>
-                <a href="../widgets.html">
+                <a href="{!! route('dashboard.index') !!}">
                     <i class="fa fa-dashboard"></i> <span> Dashboard</span>
                 </a>
             </li>

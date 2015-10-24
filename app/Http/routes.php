@@ -24,9 +24,7 @@ Route::get('/teste',function(){
 
 Route::group(['prefix' => 'admin'], function () {
 
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    });
+    Route::get('/dashboard',              ['as'=>'dashboard.index','uses'=>'Admin\DashboardController@index']);
 
 //    Clientes
     Route::get('/cliente',              ['as'=>'cliente.index','uses'=>'Admin\ClienteController@index']);
@@ -105,6 +103,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/contrato/ordemservico/novo',         ['as'=>'contrato.novo','uses'=>'Admin\ContratoController@novo']);
     Route::get('/contrato/orcamento/novo',         ['as'=>'contrato.novoorcamento','uses'=>'Admin\ContratoController@novoOrcamento']);
     Route::get('/contrato/editar/{id}',  ['as'=>'contrato.editar','uses'=>'Admin\ContratoController@editar']);
+    Route::get('/contrato/detalhes/{id}',  ['as'=>'contrato.detalhes','uses'=>'Admin\ContratoController@detalhes']);
     Route::post('/contrato/cadastrar',   ['as'=>'contrato.cadastrar','uses'=>'Admin\ContratoController@cadastrar']);
     Route::post('/contrato/atualizar',   ['as'=>'contrato.atualizar','uses'=>'Admin\ContratoController@atualizar']);
     Route::post('/contrato',             ['as'=>'contrato.pesquisa','uses'=>'Admin\ContratoController@pesquisar']);
@@ -118,6 +117,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/contrato/andamento',        ['as'=>'contrato.andamento','uses'=>'Admin\ContratoController@andamento']);
     Route::post('/contrato/autorizar',        ['as'=>'contrato.autorizar','uses'=>'Admin\ContratoController@autorizar']);
     Route::post('/contrato/aberto',        ['as'=>'contrato.aberto','uses'=>'Admin\ContratoController@aberto']);
+    Route::get('/contrato/download/{id}',   ['as'=>'contrato.download','uses'=>'Admin\ContratoController@download']);
 
 
     Route::get('/configuracao',             ['as'=>'configuracao.editar','uses'=>'Admin\ConfiguracaoController@editar']);

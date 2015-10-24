@@ -1,5 +1,5 @@
 <div class="content-wrapper">
-    @include('admin.layout.lte.includes.alertas')
+
     <section class="content-header">
         <h1>
             Blank page
@@ -14,7 +14,7 @@
 
     <!-- Main content -->
     <section class="content">
-
+        @include('admin.layout.lte.includes.alertas')
 
         @yield('conteudo')
 

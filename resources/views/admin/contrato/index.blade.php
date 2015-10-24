@@ -69,7 +69,7 @@
                         <td>{!! date_format($r->created_at,'d/m/Y')." às ".date_format($r->created_at,'H:i') !!}</td>
                         <td>R$ {!! $r->maoobra->sum('valor') + $r->pedidos->sum('valor_total')!!}</td>
                         <td>
-                            <a href="#" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i></a>
+                            <a href="{!! route('contrato.detalhes',['id'=>$r->id]) !!}" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i></a>
                             <a href="{!! route('contrato.editar',['id'=>$r->id]) !!}" class="btn btn-xs btn-success"><i class="fa fa-edit"></i></a>
                             <a href="#" class="btn btn-xs btn-danger excluir" data-toggle="modal" data-target="#form-excluir" excluir="{!! $r->id !!}"><i class="fa fa-remove "></i></a>
                         </td>
