@@ -18,8 +18,8 @@ class ContratoController extends Controller
 {
     public function index()
     {
-        $contrato   =   Contrato::paginate(15);
-        return view('admin.contrato.index')->with('contratos',$contrato);
+        $contratos   =   Contrato::paginate(15);
+        return view('admin.contrato.index',['contratos'=>$contratos]);
     }
 
     public function novo()
@@ -44,7 +44,7 @@ class ContratoController extends Controller
 
             $id    =   Contrato::gravar(request());
 
-            return redirect()->route('contrato.editar',['id'=>$id]);
+            return redirect()->route('contrato.editar',['id'=>$id])->with('alerta','deu');
 
         }catch (\Exception $e){
             return $e->getMessage();
@@ -226,7 +226,6 @@ class ContratoController extends Controller
     public function rmPeca()
     {
         if(request()->ajax()){
-
 
             Contrato::desvincularPeca(request());
 

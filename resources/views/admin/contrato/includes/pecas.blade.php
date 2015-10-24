@@ -13,7 +13,7 @@
             <td>{!! $r->qnt !!}</td>
             <td>{!! $r->valor !!}</td>
             <td>{!! $r->valor_total !!}</td>
-            <td><a href="#" class="btn btn-xs btn-danger excluir-peca" contrato="{!! $contrato->id !!}" peca="{!! $r->peca->id !!}"><i class="fa fa-remove "></i></a></td>
+            <td><a href="#" class="btn btn-xs btn-danger excluir-peca" pedido="{!! $r->id !!}" contrato="{!! $contrato->id !!}" peca="{!! $r->peca->id !!}"><i class="fa fa-remove "></i></a></td>
         </tr>
     @endforeach
     </tbody>
@@ -27,10 +27,12 @@
     $('.excluir-peca').click(function(){
         var peca     =   $(this).attr('peca');
         var contrato    =   $(this).attr('contrato');
+        var pedido      =   $(this).attr('pedido');
 
         var dados   =   {
             'peca'      :   peca,
-            'contrato'  :   contrato
+            'contrato'  :   contrato,
+            'pedido'    :   pedido
         }
 
         $.ajax({

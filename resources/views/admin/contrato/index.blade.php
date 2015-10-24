@@ -48,13 +48,13 @@
                     <thead>
                     <tr>
                         <th style="width:3%">ID</th>
-                        <th style="width:30%">Nome</th>
+                        <th style="width:25%">Nome</th>
                         <th style="width:10%">Veiculo</th>
-                        <th style="width:15%">Modelo</th>
-                        <th>Situação</th>
+                        <th style="width:12%">Modelo</th>
+                        <th style="width:12%">Situação</th>
                         <th>Entrada em</th>
                         <th>Valor</th>
-                        <th style="width:13%"></th>
+                        <th style="width:10%"></th>
 
                     </tr>
                     </thead>

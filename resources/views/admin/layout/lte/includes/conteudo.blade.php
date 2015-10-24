@@ -1,5 +1,5 @@
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+    @include('admin.layout.lte.includes.alertas')
     <section class="content-header">
         <h1>
             Blank page

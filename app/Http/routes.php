@@ -15,11 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/teste',function(){
-    $contrato   =   \App\Contrato::find(15102356395);
-//    return $contrato;
-//    dd(\App\Pedido::faturarPecas(1));
-    return \App\Pedido::faturarPecas(1);
+        $pdf    =   PDF::loadView('admin.contrato.pdf',['teste'=>'rafael lima']);
 
+
+    return $pdf->download('teste.pdf');
 
 });
 

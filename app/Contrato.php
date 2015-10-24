@@ -45,7 +45,7 @@ class Contrato extends Model
     public function pecas()
     {
         return $this->belongsToMany('App\Peca','pedidos','contrato_id','peca_id')
-            ->withPivot('valor','qnt','valor_total');
+            ->withPivot('valor','qnt','valor_total','id')->withTimestamps();
     }
 
     public function pedidos()
@@ -132,6 +132,10 @@ class Contrato extends Model
     {
         $contrato      =   Contrato::find($req->get('id'));
 
+        foreach($contrato->pedidos  as  $pedido){
+            Pedido::desfaturarPeca($pedido->id);
+        }
+
         if($contrato->delete() == false){
             throw new \Exception('Erro ao excluir registro',402);
         }
@@ -146,10 +150,15 @@ class Contrato extends Model
     {
         $contrato       =   Contrato::find($req->get('id'));
 
+
         $contrato->status()->attach(unserialize(Configuracao::find(1)->contrato)['cancelado'],['obs'=>$req->get('obs'),'data'=>$req->get('data')]);
 
         if($contrato->save() == false){
             throw new \Exception('Não foi possível vincular o status', 402);
+        }else{
+            foreach($contrato->pedidos  as  $pedido){
+                Pedido::desfaturarPeca($pedido->id);
+            }
         }
     }
 
@@ -179,14 +188,18 @@ class Contrato extends Model
     {
         $contrato       =   Contrato::find($req->get('id'));
 
-        if(Pedido::faturarPecas($req->get('id'))){
-            $contrato->status()->attach(unserialize(Configuracao::find(1)->contrato)['aberto'],['obs'=>$req->get('obs'),'data'=>$req->get('data')]);
-        }
+
+        $contrato->status()->attach(unserialize(Configuracao::find(1)->contrato)['aberto'],['obs'=>$req->get('obs'),'data'=>$req->get('data')]);
+
 
 
 
         if($contrato->save() == false){
             throw new \Exception('Não foi possível vincular o status', 402);
+        }else{
+            foreach($contrato->pedidos  as $pedido){
+                Pedido::faturarPecas($pedido->id);
+            }
         }
     }
 
@@ -230,14 +243,31 @@ class Contrato extends Model
     public static function vincularPeca(Request $req)
     {
         $contrato   =   Contrato::find($req->get('contrato'));
+        $status     =   $contrato->status->last();
+
+
         $contrato->pecas()->attach($req->get('peca'),['valor'=>$req->get('valor'),'qnt'=>$req->get('qnt'),'valor_total'=>$req->get('valor')*$req->get('qnt')]);
         $contrato->save();
+
+        if($status->id != unserialize(Configuracao::find(1)->contrato)['orcamento']){
+            Pedido::faturarPecas($contrato->pecas->last()->pivot->id);
+        }
+
+
+
     }
     public static function desvincularPeca(Request $req)
     {
         $contrato   =   Contrato::find($req->get('contrato'));
+        $status     =   $contrato->status->last();
+
+        if($status->id != unserialize(Configuracao::find(1)->contrato)['orcamento']){
+            Pedido::desfaturarPeca($req->get('pedido'));
+        }
 
         $contrato->pecas()->detach($req->get('peca'));
         $contrato->save();
+
+
     }
 }
