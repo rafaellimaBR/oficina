@@ -27,8 +27,8 @@ class CriarContratoTabela extends Migration
             $tabela->timestamps();
 
             $tabela->primary('id');
-            $tabela->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
-            $tabela->foreign('veiculo_id')->references('id')->on('veiculos')->onDelete('cascade');
+            $tabela->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade')->onUpdate('cascade');
+            $tabela->foreign('veiculo_id')->references('id')->on('veiculos')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

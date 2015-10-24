@@ -14,6 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/entrar', function () {
+    return view('login');
+});
 Route::get('/teste',function(){
         $pdf    =   PDF::loadView('admin.contrato.pdf',['teste'=>'rafael lima']);
 
@@ -26,6 +30,24 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/dashboard',              ['as'=>'dashboard.index','uses'=>'Admin\DashboardController@index']);
 
+//    Grupo
+    Route::get('/grupo',              ['as'=>'grupo.index','uses'=>'Admin\GrupoController@index']);
+    Route::get('/grupo/novo',         ['as'=>'grupo.novo','uses'=>'Admin\GrupoController@novo']);
+    Route::get('/grupo/editar/{id}',  ['as'=>'grupo.editar','uses'=>'Admin\GrupoController@editar']);
+    Route::post('/grupo/cadastrar',   ['as'=>'grupo.cadastrar','uses'=>'Admin\GrupoController@cadastrar']);
+    Route::post('/grupo/atualizar',   ['as'=>'grupo.atualizar','uses'=>'Admin\GrupoController@atualizar']);
+    Route::post('/grupo',             ['as'=>'grupo.pesquisa','uses'=>'Admin\GrupoController@pesquisar']);
+    Route::post('/grupo/excluir',     ['as'=>'grupo.excluir','uses'=>'Admin\GrupoController@excluir']);
+
+//    Usuarios
+    Route::get('/usuario',              ['as'=>'usuario.index','uses'=>'Admin\UsuarioController@index']);
+    Route::get('/usuario/novo',         ['as'=>'usuario.novo','uses'=>'Admin\UsuarioController@novo']);
+    Route::get('/usuario/editar/{id}',  ['as'=>'usuario.editar','uses'=>'Admin\UsuarioController@editar']);
+    Route::post('/usuario/cadastrar',   ['as'=>'usuario.cadastrar','uses'=>'Admin\UsuarioController@cadastrar']);
+    Route::post('/usuario/atualizar',   ['as'=>'usuario.atualizar','uses'=>'Admin\UsuarioController@atualizar']);
+    Route::post('/usuario',             ['as'=>'usuario.pesquisa','uses'=>'Admin\UsuarioController@pesquisar']);
+    Route::post('/usuario/excluir',     ['as'=>'usuario.excluir','uses'=>'Admin\UsuarioController@excluir']);
+    
 //    Clientes
     Route::get('/cliente',              ['as'=>'cliente.index','uses'=>'Admin\ClienteController@index']);
     Route::get('/cliente/novo',         ['as'=>'cliente.novo','uses'=>'Admin\ClienteController@novo']);
@@ -185,5 +207,14 @@ Route::group(['prefix' => 'admin'], function () {
             $dados[$r->id] = $r->nome;
         }
         $view->with('status',$dados);
+    });
+    View::composer(['admin.usuario.includes.formulario'],function($view) {
+        $grupos    =   \App\Grupo::all();
+        $dados = [];
+
+        foreach($grupos as $r){
+            $dados[$r->id] = $r->nome;
+        }
+        $view->with('grupos',$dados);
     });
 });

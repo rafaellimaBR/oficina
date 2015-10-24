@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             $this->call(StatusSeeder::class);
             $this->call(ConfiguracaoSeeder::class);
             $this->call(VeiculoSeeder::class);
+            $this->call(GrupoSeeder::class);
+            $this->call(UsuarioSeeder::class);
 
         Model::reguard();
     }

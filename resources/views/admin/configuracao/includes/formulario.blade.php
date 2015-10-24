@@ -135,7 +135,7 @@
                         @else
                             <button type="submit" class="btn btn-success"><i class="fa  fa-save"> </i> Save</button>
                         @endif
-                        <a href="" class="btn btn-default"><i class="fa   fa-mail-reply"> </i> Voltar</a>
+                        <a href="{!! route('dashboard.index') !!}" class="btn btn-default"><i class="fa   fa-mail-reply"> </i> Voltar</a>
                     </div>
                 </div>
             </div><!-- /.tab-content -->

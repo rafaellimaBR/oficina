@@ -21,8 +21,8 @@ class CriarContatoTabela extends Migration
             $tabela->string('dis')->nullable();
             $tabela->timestamps();
 
-            $tabela->foreign('telefone_id')->references('id')->on('telefones')->onDelete('cascade');
-            $tabela->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
+            $tabela->foreign('telefone_id')->references('id')->on('telefones')->onDelete('cascade')->onUpdate('cascade');
+            $tabela->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
