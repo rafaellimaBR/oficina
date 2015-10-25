@@ -10,23 +10,32 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Veiculo;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Admin\AdminController;
 
-class VeiculoController extends Controller
+class VeiculoController extends AdminController
 {
     public function index()
     {
+        if(!unserialize(auth()->user()->grupo->veiculo)['vis']){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $veiculo   =   Veiculo::paginate(15);
         return view('admin.veiculo.index')->with('veiculos',$veiculo);
     }
 
     public function novo()
     {
+        if(!unserialize(auth()->user()->grupo->veiculo)['cri']){
+            return redirect()->route('veiculo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         return view('admin.veiculo.novo');
     }
 
     public function detalhes($id)
     {
+        if(!unserialize(auth()->user()->grupo->veiculo)['vis']){
+            return redirect()->route('veiculo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $veiculo    =   Veiculo::find($id);
 
         return view('admin.veiculo.detalhes')->with('veiculo',$veiculo);
@@ -34,6 +43,9 @@ class VeiculoController extends Controller
 
     public function cadastrar()
     {
+        if(!unserialize(auth()->user()->grupo->veiculo)['cri']){
+            return redirect()->route('veiculo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
 //            return request()->all();
 
@@ -53,12 +65,23 @@ class VeiculoController extends Controller
     }
     public function editar($id)
     {
+        if(!unserialize(auth()->user()->grupo->veiculo)['edi']){
+            return redirect()->route('veiculo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $veiculo    =   Veiculo::find($id);
-        return view('admin.veiculo.edicao')->with('veiculo',$veiculo);
+
+        if($veiculo == null){
+            return redirect()->route('veiculo.index')->with('alerta',['tipo'=>'warning','msg'=>'Nenhum registro foi encontrado.','icon'=>'warning']);
+        }else {
+            return view('admin.veiculo.edicao')->with('veiculo', $veiculo);
+        }
     }
 
     public function atualizar()
     {
+        if(!unserialize(auth()->user()->grupo->veiculo)['edi']){
+            return redirect()->route('veiculo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Veiculo::validar(request()->all());
 
@@ -77,6 +100,9 @@ class VeiculoController extends Controller
 
     public function excluir()
     {
+        if(!unserialize(auth()->user()->grupo->veiculo)['exc']){
+            return redirect()->route('veiculo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try {
             Veiculo::excluir(request());
             return redirect()->route('veiculo.index');

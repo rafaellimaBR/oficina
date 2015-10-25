@@ -10,24 +10,33 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Marca;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Traits\Macroable;
 
-class MarcaController extends Controller
+class MarcaController extends AdminController
 {
     public function index()
     {
+        if(!unserialize(auth()->user()->grupo->marca)['vis']){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $marca   =   Marca::paginate(15);
         return view('admin.marca.index')->with('marcas',$marca);
     }
 
     public function novo()
     {
+        if(!unserialize(auth()->user()->grupo->marca)['cri']){
+            return redirect()->route('marca.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         return view('admin.marca.novo');
     }
 
     public function cadastrar()
     {
+        if(!unserialize(auth()->user()->grupo->marca)['cri']){
+            return redirect()->route('marca.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Marca::validar(request()->all());
 
@@ -45,12 +54,23 @@ class MarcaController extends Controller
     }
     public function editar($id)
     {
+        if(!unserialize(auth()->user()->grupo->marca)['edi']){
+            return redirect()->route('marca.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $marca    =   Marca::find($id);
-        return view('admin.marca.edicao')->with('marca',$marca);
+
+        if($marca   != null) {
+            return view('admin.marca.edicao')->with('marca', $marca);
+        }else{
+            return redirect()->route('marca.index')->with('alerta',['tipo'=>'warning','msg'=>'Nenhum registro foi encontrado.','icon'=>'warning']);
+        }
     }
 
     public function atualizar()
     {
+        if(!unserialize(auth()->user()->grupo->marca)['edi']){
+            return redirect()->route('marca.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Marca::validar(request()->all());
 
@@ -69,6 +89,9 @@ class MarcaController extends Controller
 
     public function excluir()
     {
+        if(!unserialize(auth()->user()->grupo->marca)['exc']){
+            return redirect()->route('marca.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try {
             Marca::excluir(request());
             return redirect()->route('marca.index');

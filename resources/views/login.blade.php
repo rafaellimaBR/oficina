@@ -1,7 +1,7 @@
 <html><head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <title>AdminLTE 2 | Log in</title>
+    <title>Entrar | Sistema</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!-- Bootstrap 3.3.5 -->
@@ -37,19 +37,19 @@
 {!! Html::script('/plugins/jQuery/jQuery-2.1.4.min.js') !!}
 <div class="login-box">
     <div class="login-logo">
-        <a href="../../index2.html"><b>Admin</b>LTE</a>
+        <a href="#"><b>Sistema</b>O.S.</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">Identifique-se para iniciar sua sessão</p>
 
-        <form method="post" action="../../index2.html">
+        {!! Form::open(['route'=>['entrar.logar'],'method'=>'post']) !!}
             <div class="form-group has-feedback">
-                <input type="email" placeholder="Email" class="form-control">
+                <input type="email" placeholder="Email" class="form-control" value='demo@exemplo.com.br' name="endemail">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" placeholder="Password" class="form-control">
+                <input type="password" placeholder="Password" class="form-control" value="demo" name="password">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="row">
@@ -65,8 +65,10 @@
                     <button class="btn btn-primary btn-block btn-flat" type="submit">Entrar</button>
                 </div>
                 <!-- /.col -->
+
             </div>
-        </form>
+        <h5><a href="https://www.facebook.com/rafaelnlima" target="new">Facebook | Rafael Lima</a></h5>
+        {!! Form::close() !!}
 
 
         <!-- /.social-auth-links -->
@@ -75,6 +77,9 @@
         {{--<a class="text-center" href="register.html">Register a new membership</a>--}}
 
     </div>
+    @if(session('alerta'))
+        <p style="color: #ff111a; font-weight: 100; ">{!! session('alerta') !!}</p>
+    @endif
     <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->

@@ -10,12 +10,15 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Grupo;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Admin\AdminController;
 
-class GrupoController extends Controller
+class GrupoController extends AdminController
 {
     public function index()
     {
+        if(!unserialize(auth()->user()->grupo->grupo)['vis']){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $grupos   =   Grupo::paginate(15);
 
         return view('admin.grupo.index',['grupos'=>$grupos]);
@@ -23,11 +26,17 @@ class GrupoController extends Controller
 
     public function novo()
     {
+        if(!unserialize(auth()->user()->grupo->grupo)['cri']){
+            return redirect()->route('grupo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         return view('admin.grupo.novo');
     }
 
     public function cadastrar()
     {
+        if(!unserialize(auth()->user()->grupo->grupo)['cri']){
+            return redirect()->route('grupo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Grupo::validar(request()->all());
 
@@ -45,7 +54,9 @@ class GrupoController extends Controller
     }
     public function editar($id)
     {
-
+        if(!unserialize(auth()->user()->grupo->grupo)['edi']){
+            return redirect()->route('grupo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $grupo    =   Grupo::find($id);
 
         if($grupo == null){
@@ -58,6 +69,9 @@ class GrupoController extends Controller
 
     public function atualizar()
     {
+        if(!unserialize(auth()->user()->grupo->grupo)['edi']){
+            return redirect()->route('grupo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
 
         try{
             $validacao  =   Grupo::validar(request()->all());
@@ -77,6 +91,9 @@ class GrupoController extends Controller
 
     public function excluir()
     {
+        if(!unserialize(auth()->user()->grupo->grupo)['exc']){
+            return redirect()->route('grupo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try {
             Grupo::excluir(request());
             return redirect()->route('grupo.index')->with('alerta',['tipo'=>'success','msg'=>'Excluir com sucesso.','icon'=>'check']);

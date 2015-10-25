@@ -9,14 +9,17 @@
 namespace App\Http\Controllers\Admin;
 
 
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Admin\AdminController;
 use App\Usuario;
 
-class UsuarioController extends Controller
+class UsuarioController extends AdminController
 {
 
     public function index()
     {
+        if(!unserialize(auth()->user()->grupo->usuario)['vis']){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $usuarios   =   Usuario::paginate(15);
 
         return view('admin.usuario.index',['usuarios'=>$usuarios]);
@@ -24,12 +27,17 @@ class UsuarioController extends Controller
 
     public function novo()
     {
+        if(!unserialize(auth()->user()->grupo->usuario)['cri']){
+            return redirect()->route('usuario.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         return view('admin.usuario.novo');
     }
 
     public function cadastrar()
     {
-
+        if(!unserialize(auth()->user()->grupo->usuario)['cri']){
+            return redirect()->route('usuario.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Usuario::validar(request()->all());
 
@@ -47,6 +55,9 @@ class UsuarioController extends Controller
     }
     public function editar($id)
     {
+        if(!unserialize(auth()->user()->grupo->usuario)['edi']){
+            return redirect()->route('usuario.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
 
         $usuario    =   Usuario::find($id);
 
@@ -60,7 +71,9 @@ class UsuarioController extends Controller
 
     public function atualizar()
     {
-
+        if(!unserialize(auth()->user()->grupo->usuario)['edi']){
+            return redirect()->route('usuario.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Usuario::validar(request()->all());
 
@@ -79,6 +92,9 @@ class UsuarioController extends Controller
 
     public function excluir()
     {
+        if(!unserialize(auth()->user()->grupo->usuario)['exc']){
+            return redirect()->route('usuario.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try {
             Usuario::excluir(request());
             return redirect()->route('usuario.index')->with('alerta',['tipo'=>'success','msg'=>'Excluir com sucesso.','icon'=>'check']);

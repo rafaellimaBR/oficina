@@ -10,24 +10,33 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Servico;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Admin\AdminController;
 
 
-class ServicoController extends Controller
+class ServicoController extends AdminController
 {
     public function index()
     {
+        if(!unserialize(auth()->user()->grupo->servico)['vis']){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $servico   =   Servico::paginate(15);
         return view('admin.servico.index')->with('servicos',$servico);
     }
 
     public function novo()
     {
+        if(!unserialize(auth()->user()->grupo->servico)['cri']){
+            return redirect()->route('servico.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         return view('admin.servico.novo');
     }
 
     public function cadastrar()
     {
+        if(!unserialize(auth()->user()->grupo->servico)['cri']){
+            return redirect()->route('servico.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Servico::validar(request()->all());
 
@@ -45,12 +54,23 @@ class ServicoController extends Controller
     }
     public function editar($id)
     {
+        if(!unserialize(auth()->user()->grupo->servico)['edi']){
+            return redirect()->route('servico.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $servico    =   Servico::find($id);
-        return view('admin.servico.edicao')->with('servico',$servico);
+
+        if($servico != null) {
+            return view('admin.servico.edicao')->with('servico', $servico);
+        }else{
+            return redirect()->route('servico.index')->with('alerta',['tipo'=>'warning','msg'=>'Nenhum registro foi encontrado.','icon'=>'warning']);
+        }
     }
 
     public function atualizar()
     {
+        if(!unserialize(auth()->user()->grupo->servico)['edi']){
+            return redirect()->route('servico.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Servico::validar(request()->all());
 
@@ -69,6 +89,10 @@ class ServicoController extends Controller
 
     public function excluir()
     {
+        if(!unserialize(auth()->user()->grupo->servico)['exc']){
+            return redirect()->route('servico.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
+
         try {
             Servico::excluir(request());
             return redirect()->route('servico.index');

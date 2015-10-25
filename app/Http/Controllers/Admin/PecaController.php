@@ -9,24 +9,33 @@
 namespace App\Http\Controllers\Admin;
 
 
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Admin\AdminController;
 use App\Peca;
 
-class PecaController extends Controller
+class PecaController extends AdminController
 {
     public function index()
     {
+        if(!unserialize(auth()->user()->grupo->estoque)['vis']){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $peca   =   Peca::paginate(15);
         return view('admin.peca.index')->with('pecas',$peca);
     }
 
     public function novo()
     {
+        if(!unserialize(auth()->user()->grupo->estoque)['cri']){
+            return redirect()->route('peca.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         return view('admin.peca.novo');
     }
 
     public function cadastrar()
     {
+        if(!unserialize(auth()->user()->grupo->estoque)['cri']){
+            return redirect()->route('peca.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Peca::validar(request()->all());
 
@@ -44,12 +53,23 @@ class PecaController extends Controller
     }
     public function editar($id)
     {
+        if(!unserialize(auth()->user()->grupo->estoque)['edi']){
+            return redirect()->route('peca.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $peca    =   Peca::find($id);
-        return view('admin.peca.edicao')->with('peca',$peca);
+
+        if($peca != null) {
+            return view('admin.peca.edicao')->with('peca', $peca);
+        }else{
+            return redirect()->route('peca.index')->with('alerta',['tipo'=>'warning','msg'=>'Nenhum registro foi encontrado.','icon'=>'warning']);
+        }
     }
 
     public function atualizar()
     {
+        if(!unserialize(auth()->user()->grupo->estoque)['edi']){
+            return redirect()->route('peca.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Peca::validar(request()->all());
 
@@ -68,6 +88,9 @@ class PecaController extends Controller
 
     public function excluir()
     {
+        if(!unserialize(auth()->user()->grupo->estoque)['exc']){
+            return redirect()->route('peca.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try {
             Peca::excluir(request());
             return redirect()->route('peca.index');

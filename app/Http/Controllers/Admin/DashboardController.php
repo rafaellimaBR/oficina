@@ -9,12 +9,12 @@
 namespace App\Http\Controllers\Admin;
 
 
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Admin\AdminController;
 
-class DashboardController extends Controller
+class DashboardController extends AdminController
 {
     public function index()
     {
-        
+        return view('admin.dashboard');
     }
 }

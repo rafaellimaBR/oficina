@@ -11,30 +11,42 @@ namespace App\Http\Controllers\Admin;
 use App\Contrato;
 use App\Servico;
 use Carbon\Carbon;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Admin\AdminController;
 
 
-class ContratoController extends Controller
+class ContratoController extends AdminController
 {
     public function index()
     {
+        if(!unserialize(auth()->user()->grupo->contrato)['vis']){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $contratos   =   Contrato::paginate(15);
         return view('admin.contrato.index',['contratos'=>$contratos]);
     }
 
     public function novo()
     {
+        if(!unserialize(auth()->user()->grupo->contrato)['cri']){
+            return redirect()->route('contrato.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         return view('admin.contrato.novo');
     }
 
     public function novoOrcamento()
     {
+        if(!unserialize(auth()->user()->grupo->contrato)['cri']){
+            return redirect()->route('contrato.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         return view('admin.contrato.novo-orcamento');
     }
     
 
     public function cadastrar()
     {
+        if(!unserialize(auth()->user()->grupo->contrato)['cri']){
+            return redirect()->route('contrato.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Contrato::validar(request()->all());
 
@@ -52,13 +64,22 @@ class ContratoController extends Controller
     }
     public function editar($id)
     {
+        if(!unserialize(auth()->user()->grupo->contrato)['edi']){
+            return redirect()->route('contrato.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $contrato    =   Contrato::find($id);
-        return view('admin.contrato.edicao')->with('contrato',$contrato);
+        if($contrato != null) {
+            return view('admin.contrato.edicao')->with('contrato', $contrato);
+        }else{
+            return redirect()->route('contrato.index')->with('alerta',['tipo'=>'warning','msg'=>'Nenhum registro foi encontrado.','icon'=>'warning']);
+        }
     }
 
     public function atualizar()
     {
-
+        if(!unserialize(auth()->user()->grupo->contrato)['edi']){
+            return redirect()->route('contrato.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Contrato::validar(request()->all());
 

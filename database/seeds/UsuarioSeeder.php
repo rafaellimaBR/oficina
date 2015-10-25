@@ -31,7 +31,7 @@ class UsuarioSeeder extends Seeder
         DB::table('usuarios')->insert([
             'nome'          =>      'Usuário Demo',
             'registro'      =>      '0000000000',
-            'email'         =>      'usuariodemo@sisos.com.br',
+            'email'         =>      'demo@exemplo.com.br',
             'cep'           =>      '000000000',
             'logradouro'    =>      'Rua Demonstração',
             'numero'        =>      '0000',

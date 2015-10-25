@@ -10,20 +10,26 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Configuracao;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\File;
 
-class ConfiguracaoController extends Controller
+class ConfiguracaoController extends AdminController
 {
 
     public function editar()
     {
+        if(!unserialize(auth()->user()->grupo->configuracao)['edi']){
+            return redirect()->route('cliente.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $conf   =   Configuracao::find(1);
         return view('admin.configuracao.edicao',['conf'=>$conf]);
     }
 
     public function atualizar()
     {
+        if(!unserialize(auth()->user()->grupo->configuracao)['edi']){
+            return redirect()->route('cliente.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
 
             Configuracao::atualizar(request());

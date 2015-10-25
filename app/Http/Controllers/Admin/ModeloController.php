@@ -11,23 +11,32 @@ namespace App\Http\Controllers\Admin;
 
 use App\Marca;
 use App\Modelo;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Admin\AdminController;
 
-class ModeloController extends Controller
+class ModeloController extends AdminController
 {
     public function index()
     {
+        if(!unserialize(auth()->user()->grupo->modelo)['vis']){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $modelo   =   Modelo::paginate(15);
         return view('admin.modelo.index')->with('modelos',$modelo);
     }
 
     public function novo()
     {
+        if(!unserialize(auth()->user()->grupo->modelo)['cri']){
+            return redirect()->route('modelo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         return view('admin.modelo.novo');
     }
 
     public function cadastrar()
     {
+        if(!unserialize(auth()->user()->grupo->modelo)['cri']){
+            return redirect()->route('modelo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Modelo::validar(request()->all());
 
@@ -45,12 +54,22 @@ class ModeloController extends Controller
     }
     public function editar($id)
     {
+        if(!unserialize(auth()->user()->grupo->modelo)['edi']){
+            return redirect()->route('modelo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $modelo    =   Modelo::find($id);
-        return view('admin.modelo.edicao')->with('modelo',$modelo);
+        if($modelo != null) {
+            return view('admin.modelo.edicao')->with('modelo', $modelo);
+        }else{
+            return redirect()->route('modelo.index')->with('alerta',['tipo'=>'warning','msg'=>'Nenhum registro foi encontrado.','icon'=>'warning']);
+        }
     }
 
     public function atualizar()
     {
+        if(!unserialize(auth()->user()->grupo->modelo)['edi']){
+            return redirect()->route('modelo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Modelo::validar(request()->all());
 
@@ -69,6 +88,9 @@ class ModeloController extends Controller
 
     public function excluir()
     {
+        if(!unserialize(auth()->user()->grupo->modelo)['exc']){
+            return redirect()->route('modelo.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try {
             Modelo::excluir(request());
             return redirect()->route('modelo.index');

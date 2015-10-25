@@ -10,9 +10,9 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Telefone;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Admin\AdminController;
 
-class TelefoneController extends Controller
+class TelefoneController extends AdminController
 {
 
 

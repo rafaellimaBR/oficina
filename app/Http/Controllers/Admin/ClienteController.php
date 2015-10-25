@@ -9,23 +9,34 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Cliente;
-use \Illuminate\Routing\Controller;
+use App\Http\Controllers\Admin\AdminController;
 
-class ClienteController extends Controller
+class ClienteController extends AdminController
 {
     public function index()
     {
+
+        if(!unserialize(auth()->user()->grupo->cliente)['vis']){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         $clientes   =   Cliente::paginate(15);
         return view('admin.cliente.index')->with('clientes',$clientes);
     }
 
     public function novo()
     {
+
+        if(!unserialize(auth()->user()->grupo->cliente)['cri']){
+            return redirect()->route('cliente.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         return view('admin.cliente.novo');
     }
 
     public function cadastrar()
     {
+        if(!unserialize(auth()->user()->grupo->cliente)['cri']){
+            return redirect()->route('cliente.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Cliente::validar(request()->all());
 
@@ -43,6 +54,9 @@ class ClienteController extends Controller
     }
     public function editar($id)
     {
+        if(!unserialize(auth()->user()->grupo->cliente)['edi']){
+            return redirect()->route('cliente.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
 
         $cliente    =   Cliente::find($id);
 
@@ -56,6 +70,9 @@ class ClienteController extends Controller
 
     public function atualizar()
     {
+        if(!unserialize(auth()->user()->grupo->cliente)['edi']){
+            return redirect()->route('cliente.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try{
             $validacao  =   Cliente::validar(request()->all());
 
@@ -74,6 +91,9 @@ class ClienteController extends Controller
 
     public function excluir()
     {
+        if(!unserialize(auth()->user()->grupo->cliente)['exc']){
+            return redirect()->route('cliente.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        }
         try {
             Cliente::excluir(request());
             return redirect()->route('cliente.index')->with('alerta',['tipo'=>'success','msg'=>'Excluir com sucesso.','icon'=>'check']);

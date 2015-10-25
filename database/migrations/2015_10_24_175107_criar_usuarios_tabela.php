@@ -31,6 +31,7 @@ class CriarUsuariosTabela extends Migration
             $tabela->string('password',255);
             $tabela->integer('grupo_id',false,true);
             $tabela->timestamps();
+            $tabela->rememberToken();
 
             $tabela->foreign('grupo_id')->references('id')->on('grupos')->onDelete('cascade');
         });
