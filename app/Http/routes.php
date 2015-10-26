@@ -130,6 +130,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::post('/contrato/autorizar',        ['as'=>'contrato.autorizar','uses'=>'Admin\ContratoController@autorizar']);
     Route::post('/contrato/aberto',        ['as'=>'contrato.aberto','uses'=>'Admin\ContratoController@aberto']);
     Route::get('/contrato/download/{id}',   ['as'=>'contrato.download','uses'=>'Admin\ContratoController@download']);
+    Route::get('/contrato/print/{id}',   ['as'=>'contrato.print','uses'=>'Admin\ContratoController@imprimir']);
 
 
     Route::get('/configuracao',             ['as'=>'configuracao.editar','uses'=>'Admin\ConfiguracaoController@editar']);

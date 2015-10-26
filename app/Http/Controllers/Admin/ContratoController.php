@@ -276,9 +276,22 @@ class ContratoController extends AdminController
     {
         $contrato   =   Contrato::find($id);
         if($contrato    !=  null){
-            $pdf    =   \PDF::loadView('admin.contrato.pdf');
+            $pdf    =   \PDF::loadView('admin.contrato.pdf',['contrato'=>$contrato]);
 
             return $pdf->download($id.".pdf");
+        }
+    }
+
+    public function imprimir($id)
+    {
+        $contrato   =   Contrato::find($id);
+
+        if($contrato != null){
+            $pdf    =   \PDF::loadView('admin.contrato.pdf',['contrato'=>$contrato]);
+
+
+
+            return $pdf->stream($id.'.pdf');
         }
     }
 }

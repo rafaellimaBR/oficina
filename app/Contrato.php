@@ -20,6 +20,18 @@ class Contrato extends Model
         'different'     =>  'Selecione um registro',
     ];
 
+    public function scopePesquisarPorCliente($scope, $cliente)
+    {
+        if($cliente != 0){
+            return $scope->where('cliente_id','=',$cliente);
+        }
+    }
+    public function scopePesquisarPorVeiculo($scope, $veiculo)
+    {
+        if($veiculo != 0){
+            return $scope->where('veiculo_id','=',$veiculo);
+        }
+    }
     public function cliente()
     {
         return $this->belongsTo('App\Cliente','cliente_id');
@@ -143,7 +155,7 @@ class Contrato extends Model
 
     public static function pesquisar(Request $req)
     {
-        return Marca::PesquisarPorNome($req->get('nome'));
+        return Contrato::PesquisarPorCliente($req->get('cliente'))->PesquisarPorVeiculo($req->get('veiculo'));
     }
 
     public static function cancelar(Request $req)

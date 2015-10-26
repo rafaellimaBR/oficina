@@ -28,11 +28,11 @@
                         {!! Form::select('veiculo',[0=>'Todos']+$veiculos, 0, ['class'=>'form-control select2 ']) !!}
 
                     </div>
-                    <div class="form-group col-xs-2">
-                        {!! Form::label('stauts','Status') !!}
-                        {!! Form::select('stauts',[0=>'Todos']+$status, 0 , ['class'=>'form-control select2 ']) !!}
+                    {{--<div class="form-group col-xs-2">--}}
+                        {{--{!! Form::label('stauts','Status') !!}--}}
+                        {{--{!! Form::select('stauts',[0=>'Todos']+$status, 0 , ['class'=>'form-control select2 ']) !!}--}}
 
-                    </div>
+                    {{--</div>--}}
 
                     <div class="form-group col-xs-1 pull-right">
 

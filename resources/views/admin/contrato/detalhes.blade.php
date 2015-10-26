@@ -134,7 +134,7 @@
                                                 {!! $r->status->nome !!}
                                               </span>
                                                 <div class="timeline-item">
-                                                    <span class="time"><i class="fa fa-clock-o"></i> {!! $r->data !!}</span>
+                                                    <span class="time"><i class="fa fa-clock-o"></i> {!! date_format($r->created_at,'d/m/Y H:i')!!}</span>
 
                                                     <h3 class="timeline-header"><a href="#">{!! $r->status->nome !!}</a> {!! $r->status->obs !!}</h3>
 
@@ -157,7 +157,7 @@
                     <div class="row no-print">
                         <div class="col-xs-12">
                             <a href="{!! route('contrato.index') !!}" class="btn btn-default"><i class="fa   fa-mail-reply"> </i> Voltar</a>
-                            <a class="btn btn-default pull-right"  href="javascript:window.print()"><i class="fa fa-print"></i> Imprimir</a>
+                            <a href="{!! route('contrato.print',['id'=>$contrato->id]) !!}" target="new" class="btn btn-default pull-right"  ><i class="fa fa-print"></i> Imprimir</a>
 
 
                             <a href="{!! route('contrato.download',['id'=>$contrato->id]) !!}" style="margin-right: 5px;" class="btn btn-primary pull-right"><i class="fa fa-download"></i> Download</a>

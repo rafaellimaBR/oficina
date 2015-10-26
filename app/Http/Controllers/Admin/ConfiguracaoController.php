@@ -18,8 +18,8 @@ class ConfiguracaoController extends AdminController
 
     public function editar()
     {
-        if(!unserialize(auth()->user()->grupo->configuracao)['edi']){
-            return redirect()->route('cliente.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+        if(!unserialize(auth()->user()->grupo->configuracao)['vis']){
+            return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
         }
         $conf   =   Configuracao::find(1);
         return view('admin.configuracao.edicao',['conf'=>$conf]);
@@ -28,7 +28,7 @@ class ConfiguracaoController extends AdminController
     public function atualizar()
     {
         if(!unserialize(auth()->user()->grupo->configuracao)['edi']){
-            return redirect()->route('cliente.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
+            return redirect()->route('configuracao.editar')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
         }
         try{
 
