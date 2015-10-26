@@ -14,10 +14,7 @@ use App\Http\Controllers\Admin\AdminController;
 
 class CategoriaController extends AdminController
 {
-    public function __construct()
-    {
 
-    }
 
     public function index()
     {
@@ -25,7 +22,10 @@ class CategoriaController extends AdminController
         if(!unserialize(auth()->user()->grupo->categoria)['vis']){
             return redirect()->route('dashboard.index')->with('alerta',['tipo'=>'info','msg'=>'Acesso Negado','icon'=>'ban']);
         }
+
+
         $categoria   =   Categoria::paginate(15);
+
         return view('admin.categoria.index')->with('categorias',$categoria);
 
     }

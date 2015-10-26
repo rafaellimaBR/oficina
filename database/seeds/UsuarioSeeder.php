@@ -23,7 +23,7 @@ class UsuarioSeeder extends Seeder
             'estado'        =>      'Ce',
             'telefone'      =>      '(85) 34921855',
             'celular'       =>      '(85) 986607788',
-            'password'      =>      crypt('1966196089'),
+            'password'      =>      crypt('1966196089',''),
             'grupo_id'      =>      1,
             'created_at'    =>      \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at'    =>      \Carbon\Carbon::now()->toDateTimeString()
@@ -40,7 +40,7 @@ class UsuarioSeeder extends Seeder
             'estado'        =>      'De',
             'telefone'      =>      '(85) 000000000',
             'celular'       =>      '(85) 000000000',
-            'password'      =>      crypt('demo'),
+            'password'      =>      crypt('demo',''),
             'grupo_id'      =>      2,
             'created_at'    =>      \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at'    =>      \Carbon\Carbon::now()->toDateTimeString()

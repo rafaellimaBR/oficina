@@ -1,7 +1,7 @@
 @extends('admin.layout.lte.template')
 
 @section('conteudo')
-{{--{!! dd($categorias) !!}--}}
+
     <div class="row">
         <div class="col-xs-12">
             <div class="botoes">

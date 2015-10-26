@@ -59,7 +59,7 @@ class ContratoController extends AdminController
             return redirect()->route('contrato.editar',['id'=>$id])->with('alerta',['tipo'=>'success','msg'=>'Cadastrado com sucesso.','icon'=>'check']);
 
         }catch (\Exception $e){
-            return $e->getMessage();
+            return redirect()->route('contrato.index')->with('alerta',['tipo'=>'danger','msg'=>'Erro ao editar.','icon'=>'ban']);
         }
     }
     public function editar($id)
@@ -92,7 +92,7 @@ class ContratoController extends AdminController
             return redirect()->route('contrato.index');
 
         }catch (\Exception $e){
-            return $e->getMessage();
+            return redirect()->route('contrato.editar',['id'=>request()->get('id')])->with('alerta',['tipo'=>'danger','msg'=>'Erro ao editar.','icon'=>'ban']);
         }
     }
 
