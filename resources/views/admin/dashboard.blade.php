@@ -61,15 +61,14 @@
         <!-- /.col -->
     </div>
     <div class="row">
-        <div class="col-md-8">
-            <div class="box box-info">
+        <div class="col-md-12">
+            <div class="box box-warning">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Ultimas Ordens</h3>
+                    <h3 class="box-title">Últimas Ordens</h3>
 
                     <div class="box-tools pull-right">
                         <button data-widget="collapse" class="btn btn-box-tool" type="button"><i class="fa fa-minus"></i>
                         </button>
-                        <button data-widget="remove" class="btn btn-box-tool" type="button"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -82,6 +81,7 @@
                                 <th>Cliente</th>
                                 <th>Veiculo</th>
                                 <th>Modelo</th>
+                                <th>Data</th>
                                 <th>Status</th>
                                 <th>Valor</th>
                             </tr>
@@ -94,6 +94,7 @@
                                         <td>{!! $r->cliente->nome !!}</td>
                                         <td>{!! $r->veiculo->id !!}</td>
                                         <td>{!! $r->veiculo->modelo->nome !!}</td>
+                                        <td>{!! $r->data_entrada !!}</td>
                                         <td ><span style="background: {!! $r->status->last()->cor !!}; color: #ffffff; padding: 3px;border-radius: 5px; font-weight: bolder">{!! $r->status->last()->nome !!}</span> </td>
 
                                         <td>R$ {!! $r->pedidos->sum('valor_total') + $r->maoobra->sum('valor') !!}</td>
@@ -114,43 +115,58 @@
                 <!-- /.box-footer -->
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="box box-primary">
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-warning">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Estoque</h3>
+                    <h3 class="box-title">Estoque Em Baixa</h3>
 
                     <div class="box-tools pull-right">
                         <button data-widget="collapse" class="btn btn-box-tool" type="button"><i class="fa fa-minus"></i>
                         </button>
-                        <button data-widget="remove" class="btn btn-box-tool" type="button"><i class="fa fa-times"></i></button>
+
                     </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <ul class="products-list product-list-in-box">
-                        @foreach(\App\Peca::PesquisarPorQnt(5)->get() as $key=>$r)
-                            @if($key < 5)
-                                <li class="item">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Descrição</th>
+                                <th>Aplicação</th>
+                                <th>Valor</th>
+                                <th>Qnt</th>
 
-                                    <div class="product-info">
-                                        <a class="product-title" href="">{!! $r->descricao !!}
-                                            @if($r->qnt == 0)
-                                                <span class="label label-warning pull-right">{!! $r->qnt !!}</span></a>
-                                            @elseif($r->qnt >= 1 and $r->qnt < 6)
-                                            <span class="label label-warning pull-right">{!! $r->qnt !!}</span></a>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach(\App\Peca::PesquisarPorQnt(5)->get() as $key => $r)
+                                @if($key <= 5)
+                                    <tr>
+                                        <td>{!! $r->id !!}</td>
+                                        <td>{!! $r->descricao !!}</td>
+                                        <td>{!! $r->aplicacao !!}</td>
+                                        <td>{!! $r->valor !!}</td>
+                                        <td>
+                                            @if($r->qnt >= 4)
+                                                <span class="bg-orange" style="padding: 3px; border-radius: 20px;">{!! $r->qnt !!}</span>
+                                            @elseif($r->qnt >= 2 and $r->qnt < 4)
+                                                <span class="bg-red">{!! $r->qnt !!}</span>
                                             @else
-                                            <span class="label label-warning pull-right">{!! $r->qnt !!}</span></a>
+                                                <span class="bg-black">{!! $r->qnt !!}</span>
                                             @endif
+                                        </td>
+                                    </tr>
+                                @endif
 
-                                    <span class="product-description">
-                                      {!! $r->categoria->nome." | ". $r->aplicacao !!}
-                                    </span>
-                                    </div>
-                                </li>
-                            @endif
-
-                        @endforeach
-                    </ul>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer text-center">
