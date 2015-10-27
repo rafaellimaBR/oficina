@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('entrar.pagina');
 });
 
 Route::get('/entrar',              ['as'=>'entrar.pagina','uses'=>'Front\LoginController@index']);
