@@ -49,6 +49,8 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::post('/cliente/excluir',     ['as'=>'cliente.excluir','uses'=>'Admin\ClienteController@excluir']);
     Route::post('/cliente/adctelefone',   ['as'=>'cliente.adctelefone','uses'=>'Admin\ClienteController@adcTelefone']);
 
+    Route::get('/telefone/numero/{id}',   ['as'=>'telefone.getnumero','uses'=>'Admin\TelefoneController@pesquisarPorNumero']);
+
 //      Marcas
     Route::get('/marca',              ['as'=>'marca.index','uses'=>'Admin\MarcaController@index']);
     Route::get('/marca/novo',         ['as'=>'marca.novo','uses'=>'Admin\MarcaController@novo']);

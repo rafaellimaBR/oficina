@@ -95,7 +95,7 @@
                         <div class="form-group col-xs-2">
                             {!! Form::label('numero','Numero') !!}
 
-                            <input name="numero" type="text" class="form-control fone" id="campo-numero-telefone" disabled="false">
+                            <input name="numero" type="text" class="form-control fone" id="campo-numero-telefone" >
                             <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
                             <input type="hidden" name="cliente" value="{{ $cliente->id }}" id="cliente_id">
 

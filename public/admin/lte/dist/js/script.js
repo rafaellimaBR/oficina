@@ -29,13 +29,13 @@ $(document).ready(function(){
                         $('#div-pesquisar-telefone').hide('fast');
                         $('#div-add-telefone').show('fast');
                         $('#div-cadastrado-telefone').show('fast');
-                        $('#campo-numero-telefone').attr("disabled", true);
+
                     }else{
                         $('#div-pesquisar-telefone').hide('fast');
                         $('#div-add-telefone').show('fast');
                         $('#div-novo-telefone').show('fast');
                         $('#div-cadastrado-telefone').show('fast');
-                        $('#campo-numero-telefone').attr("disabled", true);
+
                     }
                 }else{
                     alert('Erro!');
